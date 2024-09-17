@@ -3,8 +3,8 @@ version: "3.8"
 services:
 
 
-  kanban-admin-service:
-    container_name: kanban-admin-service
+  bigpay-service:
+    container_name: bigpay-service
     restart: always
     build:
       context: .
@@ -18,9 +18,9 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - kanban-network
+      - bigpay-network
 
 networks:
-  kanban-network:
+  bigpay-network:
     external: true
 

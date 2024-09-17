@@ -22,11 +22,11 @@ services:
     volumes:
       - data:/data/db
     networks:
-      - kanban-network
+      - bigpay-network
 
 volumes:
   data: { }
 
 networks:
-  kanban-network:
+  bigpay-network:
     external: true
