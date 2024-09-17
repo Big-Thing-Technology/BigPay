@@ -13,7 +13,8 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "check-types": "tsc --pretty --noEmit",
     "initData": "yarn vite-node server-functions/init.ts",
-    "install-all": "yarn"
+    "install-all": "yarn",
+    "postinstall": "yarn prisma db push"
   },
   "dependencies": {
     "@bigthing/backend-utils": "^1.0.2",
