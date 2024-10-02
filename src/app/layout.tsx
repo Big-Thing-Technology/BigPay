@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/app/providers'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
-
 export const metadata: Metadata = {
-  title: 'Kanban.vn',
-  description: 'Workflow management follow kanban template',
+  title: 'BigPay.vn',
+  description: 'BigPay E-Wallet SaaS',
 }
 
 export default function RootLayout({
@@ -17,8 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <link rel="icon" href="/ivicon.svg" sizes="any" /> */}
-      <body className={`min-h-screen bg-background font-sans antialiased ${inter.variable}`}>
+      <link rel="icon" href="logo/bigpay-thumbnail.svg" sizes="any" />
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
