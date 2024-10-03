@@ -1,25 +1,23 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import AuthSocButton from '@/sections/auth/AuthSocButton'
-import AuthCard from '@/sections/auth/AuthCard'
-import AuthWrapper from '@/sections/auth/AuthWrapper'
 import LogoSection from '@/components/logo'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { firebaseAuth } from '@/lib/firebase/config'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
 import { redirect } from 'next/navigation'
+import AuthCard from '@/module/auth/AuthCard'
+import AuthWrapper from '@/module/auth/AuthWrapper'
+import AuthSocButton from '@/module/auth/AuthSocButton'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
 const imgGoogle = 'logo/google.svg'
 
-export default function LoginPage() {
+export default function LoginForm() {
   const [cookies, setCookies] = useCookies([USER_TOKEN])
 
   const handleGoogleSignIn = async () => {

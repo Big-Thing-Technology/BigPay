@@ -1,5 +1,3 @@
-import LoginPage from '@/module/auth/login-page'
-
 export default function Home() {
-  return <LoginPage />
+  return <>This is Landing Page</>
 }
