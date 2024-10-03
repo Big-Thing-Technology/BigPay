@@ -1,7 +1,6 @@
 import { hashPassword, logger } from '@bigthing/backend-utils'
 import * as process from 'process'
 import prisma from '../prisma/instance'
-import { labelColors } from '@/constant/label-color'
 
 export const initData = async () => {
   const { INIT_ADMIN_USERNAME, INIT_ADMIN_PASSWORD, INIT_ADMIN_EMAIL } = process.env
@@ -17,10 +16,8 @@ export const initData = async () => {
           fullName: 'Super Admin',
           username: INIT_ADMIN_USERNAME || '',
           email: INIT_ADMIN_EMAIL || '',
+          provider: 'env',
           password,
-          isAdmin: true,
-          transactionsAmount: 0,
-          initAvatarColor: labelColors[Math.floor(Math.random() * labelColors.length)],
         },
       })
       logger.info('init-data', 'createInitAdminSuccessfully')
