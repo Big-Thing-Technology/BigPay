@@ -1,5 +1,7 @@
 // material-ui
 
+import Image from 'next/image'
+
 /**
  * if you want to use image instead of <svg> uncomment following.
  *
@@ -19,7 +21,7 @@ export default function LogoMain() {
      * <img src={theme.palette.mode === ThemeMode.DARK ? logoDark : logo} alt="icon logo" width="100" />
      *
      */
-    <img src="logo/bigpay-first-logo.svg" alt="icon logo" width="150" />
+    <Image src="logo/bigpay-first-logo.svg" alt="icon logo" width="132" height="56" />
 
     // <svg width="66" height="28" viewBox="0 0 66 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     //   <path

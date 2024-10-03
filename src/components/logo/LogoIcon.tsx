@@ -21,7 +21,7 @@ export default function LogoIcon() {
      *
      *
      */
-    <Image src="logo/bigpay-first-logo.svg" alt="icon logo" width="100" />
+    <Image src="logo/bigpay-first-logo.svg" alt="icon logo" width="132" height="56" />
     // <img src={theme.palette.mode === ThemeMode.DARK ? logoIconDark : logoIcon} alt="icon logo" width="100" />
     // <svg width="66" height="28" viewBox="0 0 66 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     //   <path

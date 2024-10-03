@@ -9,12 +9,37 @@ import AuthSocButton from '@/sections/auth/AuthSocButton'
 import AuthCard from '@/sections/auth/AuthCard'
 import AuthWrapper from '@/sections/auth/AuthWrapper'
 import LogoSection from '@/components/logo'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { firebaseAuth } from '@/lib/firebase/config'
+import { useCookies } from 'react-cookie'
+import { USER_TOKEN } from '@/utils/cookies-key'
+import { redirect } from 'next/navigation'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
 const imgGoogle = 'logo/google.svg'
 
 export default function LoginPage() {
+  const [cookies, setCookies] = useCookies([USER_TOKEN])
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider()
+
+    try {
+      const result = await signInWithPopup(firebaseAuth, provider)
+      // const credential = GoogleAuthProvider.credentialFromResult(result)
+      const userGoogleToken = await result.user.getIdToken(true)
+
+      setCookies(USER_TOKEN, userGoogleToken)
+    } catch (e) {
+      throw new Error('Google sign in failed', e || '')
+    }
+  }
+
+  if (cookies && cookies.token) {
+    redirect('/client')
+  }
+
   return (
     <AuthWrapper>
       <Grid container spacing={3} sx={{ minHeight: '100%', alignContent: 'space-between' }}>
@@ -37,7 +62,15 @@ export default function LoginPage() {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={1}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <AuthSocButton onClick={handleGoogleSignIn}>
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Image src={imgGoogle} alt="Google" width={16} height={16} />
+                        <Typography>Sign In with Google</Typography>
+                      </Stack>
+                    </AuthSocButton>
+                  </Grid>
                   <Grid item xs={12}>
                     <AuthSocButton>
                       <Stack direction="row" alignItems="center" spacing={1}>
@@ -51,14 +84,6 @@ export default function LoginPage() {
                       <Stack direction="row" alignItems="center" spacing={1}>
                         <Image src={imgTwitter} alt="Twitter" width={16} height={16} />
                         <Typography>Sign In with Twitter</Typography>
-                      </Stack>
-                    </AuthSocButton>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <AuthSocButton>
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <Image src={imgGoogle} alt="Google" width={16} height={16} />
-                        <Typography>Sign In with Google</Typography>
                       </Stack>
                     </AuthSocButton>
                   </Grid>

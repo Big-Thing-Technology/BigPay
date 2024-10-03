@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 // material-ui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -7,13 +5,9 @@ import Box from '@mui/material/Box'
 // project-imports
 import AuthSlider from './AuthSlider'
 
-interface Props {
-  children: ReactNode
-}
-
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
-export default function AuthWrapper({ children }: Props) {
+export default function AuthWrapper({ children }: { children: any }) {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <Grid
