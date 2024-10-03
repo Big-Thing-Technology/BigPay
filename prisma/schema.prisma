@@ -13,6 +13,7 @@ model User {
   fullName      String
   email         String      @unique
   emailVerified Boolean     @default(false)
+  phoneNumber   String?
   provider      String
   avatar        String      @default("")
   password      String
