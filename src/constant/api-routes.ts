@@ -1,3 +1,1 @@
-export const apiRoutes = {
-  login: '/api/auth/login',
-}
+export const apiRoutes = {}

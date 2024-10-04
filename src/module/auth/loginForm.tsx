@@ -8,7 +8,6 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { firebaseAuth } from '@/lib/firebase/config'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
-import { redirect } from 'next/navigation'
 import AuthCard from '@/module/auth/AuthCard'
 import AuthWrapper from '@/module/auth/AuthWrapper'
 import AuthSocButton from '@/module/auth/AuthSocButton'
@@ -18,7 +17,7 @@ const imgTwitter = 'logo/twitter.svg'
 const imgGoogle = 'logo/google.svg'
 
 export default function LoginForm() {
-  const [cookies, setCookies] = useCookies([USER_TOKEN])
+  const [, setCookies] = useCookies([USER_TOKEN])
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider()
@@ -32,10 +31,6 @@ export default function LoginForm() {
     } catch (e) {
       throw new Error('Google sign in failed', e || '')
     }
-  }
-
-  if (cookies && cookies.token) {
-    redirect('/client')
   }
 
   return (

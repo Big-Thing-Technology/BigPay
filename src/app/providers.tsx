@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ConfigProvider } from '@/config-context'
 import ThemeCustomization from '@/themes'
 import { ToastContainer } from 'react-toastify'
+import { AuthProvider } from '@/module/provider/AuthProvider'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ConfigProvider>
         <ThemeCustomization>
           <ToastContainer />
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </ThemeCustomization>
       </ConfigProvider>
     </CookiesProvider>
