@@ -1,5 +1,5 @@
 import { TValidateFunction } from '@bigthing/backend-utils'
-import { UpdateOrganizationReq } from '../update-organization/updateOrganizationReq'
+import { UpdateOrganizationReq } from '../update-organization-info'
 import prisma from '../../../prisma/instance'
 
 /**
@@ -29,7 +29,9 @@ export const IS_ORGANIZATION_ID: TValidateFunction<UpdateOrganizationReq, string
   if (typeof value === 'undefined' || value === null) {
     return { ...error, [key]: 'idRequired' }
   }
-  const foundOrganization = await prisma.organization.findUnique({ where: { id: value } })
+  const foundOrganization = await prisma.organization.findUnique({
+    where: { id: value, isDeleted: false },
+  })
   if (!foundOrganization) {
     return { ...error, [key]: 'idNotFound' }
   }

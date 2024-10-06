@@ -19,6 +19,7 @@ export const getOrganizationByUser = async (
   // Find list of every Organization have relation with user with uid
   const userOrganizations = await prisma.organization.findMany({
     where: {
+      isDeleted: false,
       members: {
         every: {
           userId: foundUser.id,

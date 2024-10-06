@@ -1,11 +1,11 @@
 import { pipeline } from '@bigthing/backend-utils'
-import { updateOrganization } from '../../../../../server-functions/organization/update-organization-info'
+import { updateOrganizationStatus } from '../../../../../server-functions/organization/update-organization-status'
 
 export async function PUT(req: Request) {
   const reqBody = await req.json()
   const token = req.headers.get('token')
   const result = await pipeline({
-    execFunc: () => updateOrganization({ req: reqBody, token: token! }),
+    execFunc: () => updateOrganizationStatus({ req: reqBody, token: token! }),
   })
   return Response.json(result)
 }

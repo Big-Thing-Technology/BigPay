@@ -24,6 +24,7 @@ export const getOrganizationById = async ({
   const foundOrganization = await prisma.organization.findUnique({
     where: {
       id,
+      isDeleted: false,
       members: {
         some: {
           userId: foundUser.id,
@@ -31,6 +32,13 @@ export const getOrganizationById = async ({
       },
     },
   })
+  if (!foundOrganization) {
+    return {
+      status: 400,
+      message: 'organizationNotFound',
+      data: null,
+    }
+  }
 
   return {
     status: 200,

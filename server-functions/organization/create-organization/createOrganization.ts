@@ -1,12 +1,28 @@
-import { PipelineResult } from '@bigthing/backend-utils'
-import { CreateOrganizationReq } from './createOrganizationReq'
+import { PipelineResult, validate } from '@bigthing/backend-utils'
+import {
+  CreateOrganizationError,
+  CreateOrganizationReq,
+  CreateOrganizationValidator,
+} from './createOrganizationReq'
 import prisma from '../../../prisma/instance'
 import { decodedFirebaseToken } from '../../shared/decodedFirebaseToken'
+import { CreateOrganizationRes } from './createOrganizationRes'
 
 export const createOrganization = async (
   token: string,
   req: CreateOrganizationReq
-): Promise<PipelineResult<any>> => {
+): Promise<PipelineResult<CreateOrganizationRes | CreateOrganizationError | null>> => {
+  const validateRes = await validate(req, CreateOrganizationValidator)
+  if (validateRes.isError) {
+    return {
+      data: {
+        ...validateRes.error,
+      },
+      message: 'invalidRequest',
+      status: 400,
+    }
+  }
+
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
