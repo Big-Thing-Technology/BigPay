@@ -1,5 +1,5 @@
 import { pipeline } from '@bigthing/backend-utils'
-import { getOrganizationByUser } from '../../../../../server-functions/organization/get-organization-by-user'
+import { getOrganizationByUser } from '../../../../../server-functions/organization/get-organizations-by-user'
 
 export async function GET(req: Request) {
   const token = req.headers.get('token')
