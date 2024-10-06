@@ -30,7 +30,7 @@ export const updateOrganization = async ({
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
     return {
-      status: 400,
+      status: 404,
       message: 'userNotFound',
       data: null,
     }
@@ -48,7 +48,7 @@ export const updateOrganization = async ({
   })
   if (!foundOrganization) {
     return {
-      status: 400,
+      status: 404,
       message: 'organizationNotFound',
       data: null,
     }

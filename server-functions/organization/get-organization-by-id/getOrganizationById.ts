@@ -14,9 +14,18 @@ export const getOrganizationById = async ({
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
     return {
-      status: 400,
+      status: 404,
       message: 'notFoundUser',
       data: null,
+    }
+  }
+
+  if (foundUser.isAdmin) {
+    const foundOrganization = await prisma.organization.findUnique({ where: { id } })
+    return {
+      status: 200,
+      message: 'getOrganizationByIdSuccessfully',
+      data: foundOrganization,
     }
   }
 
@@ -34,7 +43,7 @@ export const getOrganizationById = async ({
   })
   if (!foundOrganization) {
     return {
-      status: 400,
+      status: 404,
       message: 'organizationNotFound',
       data: null,
     }

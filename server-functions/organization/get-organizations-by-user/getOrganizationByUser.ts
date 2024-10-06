@@ -10,7 +10,7 @@ export const getOrganizationByUser = async (
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
     return {
-      status: 400,
+      status: 404,
       message: 'notFoundUser',
       data: null,
     }
