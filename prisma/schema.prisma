@@ -39,7 +39,6 @@ model OrgMember {
 model Organization {
   id                 String      @id @default(auto()) @map("_id") @db.ObjectId
   name               String
-  slug               String
   members            OrgMember[]
   active             Boolean     @default(true)
   products           Product[]
