@@ -39,9 +39,9 @@ model OrgMember {
 model Organization {
   id                 String      @id @default(auto()) @map("_id") @db.ObjectId
   name               String
-  slug               String
   members            OrgMember[]
   active             Boolean     @default(true)
+  isDeleted          Boolean     @default(false)
   products           Product[]
   transactionsAmount Int         @default(0)
   balance            Float       @default(0)
