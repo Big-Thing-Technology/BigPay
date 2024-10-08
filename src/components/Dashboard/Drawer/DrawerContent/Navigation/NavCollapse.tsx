@@ -1,10 +1,8 @@
 import { Dispatch, MouseEvent, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom'
+import { matchPath, useLocation, useNavigate } from 'react-router-dom'
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import List from '@mui/material/List'
@@ -23,7 +21,7 @@ import IconButton from '@/components/@extended/IconButton'
 import SimpleBar from '@/components/third-party/SimpleBar'
 import Transitions from '@/components/@extended/Transitions'
 
-import { MenuOrientation, ThemeMode } from '@/config'
+import { ThemeMode } from '@/config'
 import useConfig from '@/hooks/useConfig'
 import { useGetMenuMaster } from '@/api/menu'
 
@@ -81,10 +79,9 @@ export default function NavCollapse({
   const theme = useTheme()
   const navigation = useNavigate()
 
-  const downLG = useMediaQuery(theme.breakpoints.down('lg'))
   const { menuMaster } = useGetMenuMaster()
   const drawerOpen = menuMaster.isDashboardDrawerOpened
-  const { mode, menuOrientation } = useConfig()
+  const { mode } = useConfig()
 
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<string | null | undefined>(null)
@@ -131,13 +128,6 @@ export default function NavCollapse({
     }
   }
 
-  const handleHover = (event: MouseEvent<HTMLElement> | undefined) => {
-    setAnchorEl(event?.currentTarget)
-    if (!drawerOpen) {
-      setSelected(menu.id)
-    }
-  }
-
   const miniMenuOpened = Boolean(anchorEl)
 
   const handleClose = () => {
@@ -167,7 +157,6 @@ export default function NavCollapse({
     if (pathname === menu.url) {
       setSelected(menu.id)
     }
-    // eslint-disable-next-line
   }, [pathname])
 
   const checkOpenForParent = (child: NavItemType[], id: string) => {
@@ -203,8 +192,6 @@ export default function NavCollapse({
         }
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menu.children])
 
   useEffect(() => {
@@ -249,305 +236,208 @@ export default function NavCollapse({
     mode === ThemeMode.DARK ? theme.palette.secondary[400] : theme.palette.secondary.main
   const iconSelectedColor =
     mode === ThemeMode.DARK && drawerOpen ? theme.palette.text.primary : theme.palette.primary.main
-  const popperId = miniMenuOpened ? `collapse-pop-${menu.id}` : undefined
-  const FlexBox = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-  }
 
   return (
     <>
-      {menuOrientation === MenuOrientation.VERTICAL || downLG ? (
-        <>
-          <ListItemButton
-            id={`${menu.id}-button`}
-            selected={isSelected}
-            {...(!drawerOpen && {
-              onMouseEnter: (e) => handleClick(e, true),
-              onMouseLeave: handleClose,
-            })}
-            onClick={(e) => handleClick(e, true)}
+      <ListItemButton
+        id={`${menu.id}-button`}
+        selected={isSelected}
+        {...(!drawerOpen && {
+          onMouseEnter: (e) => handleClick(e, true),
+          onMouseLeave: handleClose,
+        })}
+        onClick={(e) => handleClick(e, true)}
+        sx={{
+          pl: drawerOpen ? `${level === 1 ? 20 : level * 20 - 10}px` : 1.5,
+          py: !drawerOpen && level === 1 ? 1.25 : 1,
+          ...(drawerOpen && {
+            mx: 1.25,
+            my: 0.5,
+            borderRadius: 1,
+            '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'secondary.200' },
+            '&.Mui-selected': { color: iconSelectedColor },
+          }),
+          ...(!drawerOpen && {
+            px: 2.75,
+            justifyContent: 'center',
+            '&:hover': { bgcolor: 'transparent' },
+            '&.Mui-selected': {
+              '&:hover': { bgcolor: 'transparent' },
+              bgcolor: 'transparent',
+            },
+          }),
+        }}
+        {...((drawerOpen &&
+          menu.isDropdown && {
+            'aria-controls': openCollapse ? `${menu.id}-menu` : undefined,
+            'aria-haspopup': true,
+            'aria-expanded': openCollapse ? 'true' : undefined,
+            onClick: handleClickCollapse,
+          }) as any)}
+      >
+        {menuIcon && (
+          <ListItemIcon
+            onClick={handlerIconLink}
             sx={{
-              pl: drawerOpen ? `${level === 1 ? 20 : level * 20 - 10}px` : 1.5,
-              py: !drawerOpen && level === 1 ? 1.25 : 1,
-              ...(drawerOpen && {
-                mx: 1.25,
-                my: 0.5,
-                borderRadius: 1,
-                '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'secondary.200' },
-                '&.Mui-selected': { color: iconSelectedColor },
-              }),
+              minWidth: 38,
+              color: isSelected ? 'primary.main' : textColor,
               ...(!drawerOpen && {
-                px: 2.75,
+                borderRadius: 1,
+                width: 46,
+                height: 46,
+                alignItems: 'center',
                 justifyContent: 'center',
-                '&:hover': { bgcolor: 'transparent' },
-                '&.Mui-selected': {
-                  '&:hover': { bgcolor: 'transparent' },
-                  bgcolor: 'transparent',
+                '&:hover': {
+                  bgcolor: mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.200',
                 },
               }),
+              ...(!drawerOpen &&
+                isSelected && {
+                  bgcolor: mode === ThemeMode.DARK ? 'secondary.100' : 'primary.lighter',
+                  '&:hover': {
+                    bgcolor: mode === ThemeMode.DARK ? 'secondary.200' : 'primary.lighter',
+                  },
+                }),
             }}
-            {...((drawerOpen &&
-              menu.isDropdown && {
-                'aria-controls': openCollapse ? `${menu.id}-menu` : undefined,
-                'aria-haspopup': true,
-                'aria-expanded': openCollapse ? 'true' : undefined,
-                onClick: handleClickCollapse,
-              }) as any)}
           >
-            {menuIcon && (
-              <ListItemIcon
-                onClick={handlerIconLink}
-                sx={{
-                  minWidth: 38,
-                  color: isSelected ? 'primary.main' : textColor,
-                  ...(!drawerOpen && {
-                    borderRadius: 1,
-                    width: 46,
-                    height: 46,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    '&:hover': {
-                      bgcolor: mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.200',
-                    },
-                  }),
-                  ...(!drawerOpen &&
-                    isSelected && {
-                      bgcolor: mode === ThemeMode.DARK ? 'secondary.100' : 'primary.lighter',
-                      '&:hover': {
-                        bgcolor: mode === ThemeMode.DARK ? 'secondary.200' : 'primary.lighter',
-                      },
-                    }),
-                }}
+            {menuIcon}
+          </ListItemIcon>
+        )}
+
+        {!menuIcon && drawerOpen && (
+          <ListItemIcon sx={{ minWidth: 30 }}>
+            <Dot size={isSelected ? 6 : 5} color={isSelected ? 'primary' : 'secondary'} />
+          </ListItemIcon>
+        )}
+
+        {(drawerOpen || (!drawerOpen && level !== 1)) && (
+          <ListItemText
+            primary={
+              <Typography
+                variant="h6"
+                color={isSelected ? 'primary' : textColor}
+                sx={{ fontWeight: isSelected ? 500 : 400 }}
               >
-                {menuIcon}
-              </ListItemIcon>
-            )}
-
-            {!menuIcon && drawerOpen && (
-              <ListItemIcon sx={{ minWidth: 30 }}>
-                <Dot size={isSelected ? 6 : 5} color={isSelected ? 'primary' : 'secondary'} />
-              </ListItemIcon>
-            )}
-
-            {(drawerOpen || (!drawerOpen && level !== 1)) && (
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="h6"
-                    color={isSelected ? 'primary' : textColor}
-                    sx={{ fontWeight: isSelected ? 500 : 400 }}
-                  >
-                    {menu.title}
-                  </Typography>
-                }
-                secondary={
-                  menu.caption && (
-                    <Typography variant="caption" color="secondary">
-                      {menu.caption}
-                    </Typography>
-                  )
-                }
-              />
-            )}
-            {(drawerOpen || (!drawerOpen && level !== 1)) &&
-              (menu?.url ? (
-                <IconButton
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    handleClick(event, false)
-                  }}
-                  color="secondary"
-                  variant="outlined"
-                  sx={{
-                    width: 20,
-                    height: 20,
-                    mr: '-5px !important',
-                    p: 0.25,
-                    color: 'secondary.dark',
-                    borderColor: open ? 'primary.light' : 'secondary.light',
-                    '&:hover': { borderColor: open ? 'primary.main' : 'secondary.main' },
-                  }}
-                >
-                  {miniMenuOpened || open ? (
-                    <>
-                      {miniMenuOpened ? (
-                        <ArrowRight2 size={12} color={textColor} style={{ marginLeft: 1 }} />
-                      ) : (
-                        <ArrowUp2 size={12} color={textColor} style={{ marginLeft: 1 }} />
-                      )}
-                    </>
-                  ) : (
-                    <ArrowDown2 size={12} color={textColor} style={{ marginLeft: 1 }} />
-                  )}
-                </IconButton>
-              ) : (
+                {menu.title}
+              </Typography>
+            }
+            secondary={
+              menu.caption && (
+                <Typography variant="caption" color="secondary">
+                  {menu.caption}
+                </Typography>
+              )
+            }
+          />
+        )}
+        {(drawerOpen || (!drawerOpen && level !== 1)) &&
+          (menu?.url ? (
+            <IconButton
+              onClick={(event) => {
+                event.stopPropagation()
+                handleClick(event, false)
+              }}
+              color="secondary"
+              variant="outlined"
+              sx={{
+                width: 20,
+                height: 20,
+                mr: '-5px !important',
+                p: 0.25,
+                color: 'secondary.dark',
+                borderColor: open ? 'primary.light' : 'secondary.light',
+                '&:hover': { borderColor: open ? 'primary.main' : 'secondary.main' },
+              }}
+            >
+              {miniMenuOpened || open ? (
                 <>
-                  {miniMenuOpened || open ? (
-                    <>
-                      {miniMenuOpened ? (
-                        <ArrowRight2 size={12} color={textColor} style={{ marginLeft: 1 }} />
-                      ) : (
-                        <ArrowUp2 size={12} color={textColor} style={{ marginLeft: 1 }} />
-                      )}
-                    </>
+                  {miniMenuOpened ? (
+                    <ArrowRight2 size={12} color={textColor} style={{ marginLeft: 1 }} />
                   ) : (
-                    <ArrowDown2 size={12} color={textColor} style={{ marginLeft: 1 }} />
+                    <ArrowUp2 size={12} color={textColor} style={{ marginLeft: 1 }} />
                   )}
                 </>
-              ))}
+              ) : (
+                <ArrowDown2 size={12} color={textColor} style={{ marginLeft: 1 }} />
+              )}
+            </IconButton>
+          ) : (
+            <>
+              {miniMenuOpened || open ? (
+                <>
+                  {miniMenuOpened ? (
+                    <ArrowRight2 size={12} color={textColor} style={{ marginLeft: 1 }} />
+                  ) : (
+                    <ArrowUp2 size={12} color={textColor} style={{ marginLeft: 1 }} />
+                  )}
+                </>
+              ) : (
+                <ArrowDown2 size={12} color={textColor} style={{ marginLeft: 1 }} />
+              )}
+            </>
+          ))}
 
-            {!drawerOpen && (
-              <PopperStyled
-                open={miniMenuOpened}
-                anchorEl={anchorEl}
-                placement="right-start"
-                style={{ zIndex: 2001 }}
-                popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [-12, 1] } }] }}
-              >
-                {({ TransitionProps }) => (
-                  <Transitions in={miniMenuOpened} {...TransitionProps}>
-                    <Paper
+        {!drawerOpen && (
+          <PopperStyled
+            open={miniMenuOpened}
+            anchorEl={anchorEl}
+            placement="right-start"
+            style={{ zIndex: 2001 }}
+            popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [-12, 1] } }] }}
+          >
+            {({ TransitionProps }) => (
+              <Transitions in={miniMenuOpened} {...TransitionProps}>
+                <Paper
+                  sx={{
+                    overflow: 'hidden',
+                    mt: 1.5,
+                    boxShadow: theme.customShadows.z1,
+                    backgroundImage: 'none',
+                    border: '1px solid ',
+                    borderColor: 'divider',
+                  }}
+                >
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <SimpleBar
                       sx={{
-                        overflow: 'hidden',
-                        mt: 1.5,
-                        boxShadow: theme.customShadows.z1,
-                        backgroundImage: 'none',
-                        border: '1px solid ',
-                        borderColor: 'divider',
+                        overflowX: 'hidden',
+                        overflowY: 'auto',
+                        maxHeight: 'calc(100vh - 170px)',
                       }}
                     >
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <SimpleBar
-                          sx={{
-                            overflowX: 'hidden',
-                            overflowY: 'auto',
-                            maxHeight: 'calc(100vh - 170px)',
-                          }}
-                        >
-                          {navCollapse}
-                        </SimpleBar>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Transitions>
-                )}
-              </PopperStyled>
+                      {navCollapse}
+                    </SimpleBar>
+                  </ClickAwayListener>
+                </Paper>
+              </Transitions>
             )}
-          </ListItemButton>
-          {drawerOpen && !menu?.isDropdown && (
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List sx={{ p: 0 }}>{navCollapse}</List>
-            </Collapse>
-          )}
-          {drawerOpen && menu?.isDropdown && (
-            <Menu
-              id={`${menu.id}-menu`}
-              aria-labelledby={`${menu.id}-button`}
-              anchorEl={anchorElCollapse}
-              open={openCollapse}
-              onClose={handleCloseCollapse}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              sx={{ '& .MuiPaper-root': { boxShadow: theme.shadows[2] } }}
-            >
-              {navCollapse}
-            </Menu>
-          )}
-        </>
-      ) : (
-        <ListItemButton
-          {...(menu?.url && { component: Link, to: menu.url })}
-          id={`boundary-${popperId}`}
-          selected={isSelected}
-          onMouseEnter={handleHover}
-          onMouseLeave={handleClose}
-          onClick={handleHover}
-          aria-describedby={popperId}
-          sx={{
-            '&:hover': {
-              bgcolor: 'transparent',
-            },
-            '&.Mui-selected': {
-              '&:hover': {
-                bgcolor: 'transparent',
-              },
-              bgcolor: 'transparent',
-            },
+          </PopperStyled>
+        )}
+      </ListItemButton>
+      {drawerOpen && !menu?.isDropdown && (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List sx={{ p: 0 }}>{navCollapse}</List>
+        </Collapse>
+      )}
+      {drawerOpen && menu?.isDropdown && (
+        <Menu
+          id={`${menu.id}-menu`}
+          aria-labelledby={`${menu.id}-button`}
+          anchorEl={anchorElCollapse}
+          open={openCollapse}
+          onClose={handleCloseCollapse}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
           }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          sx={{ '& .MuiPaper-root': { boxShadow: theme.shadows[2] } }}
         >
-          <Box onClick={handlerIconLink} sx={FlexBox}>
-            {menuIcon && (
-              <ListItemIcon
-                sx={{ my: 'auto', minWidth: !menu.icon ? 18 : 36, color: 'secondary.dark' }}
-              >
-                {menuIcon}
-              </ListItemIcon>
-            )}
-            <ListItemText
-              primary={
-                <Typography
-                  variant="h6"
-                  color={textColor}
-                  sx={{ fontWeight: isSelected ? 500 : 400 }}
-                >
-                  {menu.title}
-                </Typography>
-              }
-            />
-            {miniMenuOpened ? (
-              <ArrowRight2 size={12} color={textColor} />
-            ) : (
-              <ArrowDown2 size={12} color={textColor} />
-            )}
-          </Box>
-
-          {anchorEl && (
-            <PopperStyled
-              id={popperId}
-              open={miniMenuOpened}
-              anchorEl={anchorEl}
-              placement="right-start"
-              style={{ zIndex: 2001 }}
-              modifiers={[{ name: 'offset', options: { offset: [-10, 0] } }]}
-            >
-              {({ TransitionProps }) => (
-                <Transitions in={miniMenuOpened} {...TransitionProps}>
-                  <Paper
-                    sx={{
-                      overflow: 'hidden',
-                      mt: 1.5,
-                      py: 0.5,
-                      boxShadow: theme.customShadows.z1,
-                      border: '1px solid ',
-                      borderColor: 'divider',
-                      backgroundImage: 'none',
-                    }}
-                  >
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <SimpleBar
-                        sx={{
-                          overflowX: 'hidden',
-                          overflowY: 'auto',
-                          maxHeight: 'calc(100vh - 170px)',
-                        }}
-                      >
-                        {navCollapse}
-                      </SimpleBar>
-                    </ClickAwayListener>
-                  </Paper>
-                </Transitions>
-              )}
-            </PopperStyled>
-          )}
-        </ListItemButton>
+          {navCollapse}
+        </Menu>
       )}
     </>
   )

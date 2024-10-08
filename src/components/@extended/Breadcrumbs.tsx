@@ -10,7 +10,6 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs'
 
 // project-imports
 import MainCard from '@/components/MainCard'
-import { ThemeDirection } from '@/config'
 
 // assets
 import { ArrowRight2, Buildings2, Home3 } from 'iconsax-react'
@@ -71,8 +70,8 @@ export default function Breadcrumbs({
   const [item, setItem] = useState<NavItemType>()
 
   const iconSX = {
-    marginRight: theme.direction === ThemeDirection.RTL ? 0 : theme.spacing(0.75),
-    marginLeft: theme.direction === ThemeDirection.RTL ? theme.spacing(0.75) : 0,
+    marginRight: theme.spacing(0.75),
+    marginLeft: 0,
     width: '1rem',
     height: '1rem',
     color: theme.palette.secondary.main,

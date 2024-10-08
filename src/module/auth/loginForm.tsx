@@ -24,7 +24,6 @@ export default function LoginForm() {
 
     try {
       const result = await signInWithPopup(firebaseAuth, provider)
-      // const credential = GoogleAuthProvider.credentialFromResult(result)
       const userGoogleToken = await result.user.getIdToken(true)
 
       setCookies(USER_TOKEN, userGoogleToken)

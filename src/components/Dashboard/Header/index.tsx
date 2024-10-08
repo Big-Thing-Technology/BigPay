@@ -13,7 +13,7 @@ import IconButton from '@/components/@extended/IconButton'
 
 import useConfig from '@/hooks/useConfig'
 import { useGetMenuMaster } from '@/api/menu'
-import { DRAWER_WIDTH, MenuOrientation, MINI_DRAWER_WIDTH, ThemeMode } from '@/config'
+import { DRAWER_WIDTH, MINI_DRAWER_WIDTH, ThemeMode } from '@/config'
 
 // assets
 import { HambergerMenu } from 'iconsax-react'
@@ -24,11 +24,11 @@ export default function Header() {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const { mode, menuOrientation } = useConfig()
+  const { mode } = useConfig()
   const { menuMaster } = useGetMenuMaster()
   const drawerOpen = menuMaster.isDashboardDrawerOpened
 
-  const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downLG
+  const isHorizontal = false
 
   // header content
   const headerContent = useMemo(() => <HeaderContent />, [])
@@ -39,23 +39,21 @@ export default function Header() {
   // common header
   const mainHeader: ReactNode = (
     <Toolbar sx={{ px: { xs: 2, sm: 4.5, lg: 8 } }}>
-      {!isHorizontal ? (
-        <IconButton
-          aria-label="open drawer"
-          edge="start"
-          color="secondary"
-          variant="light"
-          size="large"
-          sx={{
-            color: 'secondary.main',
-            bgcolor: drawerOpen ? iconBackColorOpen : iconBackColor,
-            ml: { xs: 0, lg: -2 },
-            p: 1,
-          }}
-        >
-          <HambergerMenu />
-        </IconButton>
-      ) : null}
+      <IconButton
+        aria-label="open drawer"
+        edge="start"
+        color="secondary"
+        variant="light"
+        size="large"
+        sx={{
+          color: 'secondary.main',
+          bgcolor: drawerOpen ? iconBackColorOpen : iconBackColor,
+          ml: { xs: 0, lg: -2 },
+          p: 1,
+        }}
+      >
+        <HambergerMenu />
+      </IconButton>
       {headerContent}
     </Toolbar>
   )
