@@ -41,10 +41,6 @@ export type NavItemType = {
 export type LinkTarget = '_blank' | '_self' | '_parent' | '_top'
 
 export type MenuProps = {
-  openedItem: string
-  openedComponent: string
-  openedHorizontalItem: string | null
-
   /**
    * Indicate if dashboard layout menu open or not
    */
