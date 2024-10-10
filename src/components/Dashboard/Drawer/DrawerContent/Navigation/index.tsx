@@ -11,9 +11,9 @@ import { useMenu } from '@/atom/useMenu'
 
 export default function Navigation() {
   const { menuMaster, menu } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
-  const [, setSelectedID] = useState<string | null>(menuMaster.menuMaster.openedHorizontalItem)
+  const [, setSelectedID] = useState<string | null>(menuMaster.openedHorizontalItem)
   const [selectedItems, setSelectedItems] = useState<string | undefined>('')
   const [selectedLevel, setSelectedLevel] = useState<number>(0)
 

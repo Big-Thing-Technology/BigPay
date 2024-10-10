@@ -36,9 +36,9 @@ interface Props {
 export default function NavItem({ item, level, isParents = false, setSelectedID }: Props) {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
-  const { menuMaster, setMenuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
-  const openItem = menuMaster.menuMaster.openedItem
+  const { menuMaster, setMenuMasterState } = useMenu()
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
+  const openItem = menuMaster.openedItem
 
   const { mode } = useConfig()
   // let itemTarget: LinkTarget = '_self'
@@ -56,7 +56,10 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
   // active menu item on page load
   useEffect(() => {
     if (pathname === item.url) {
-      setMenuMaster((prev) => ({ ...prev, openedHorizontalItem: item.id! }))
+      setMenuMasterState((prev) => ({
+        ...prev,
+        menuMaster: { ...prev.menuMaster, openedHorizontalItem: item.id! },
+      }))
     }
   }, [pathname])
 
@@ -65,7 +68,10 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
 
   const itemHandler = () => {
     if (downLG) {
-      setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: false }))
+      setMenuMasterState((prev) => ({
+        ...prev,
+        menuMaster: { ...prev.menuMaster, isDashboardDrawerOpened: false },
+      }))
     }
 
     if (isParents && setSelectedID) {

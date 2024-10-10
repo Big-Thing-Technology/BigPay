@@ -16,8 +16,8 @@ export default function Header() {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const { menuMaster, setMenuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const { menuMaster, setMenuMasterState } = useMenu()
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
   const isHorizontal = false
 
@@ -30,7 +30,10 @@ export default function Header() {
     theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'secondary.100'
 
   const handlerDrawerOpen = () => {
-    setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !drawerOpen }))
+    setMenuMasterState((prev) => ({
+      ...prev,
+      menuMaster: { ...prev.menuMaster, isDashboardDrawerOpened: !drawerOpen },
+    }))
   }
 
   // common header

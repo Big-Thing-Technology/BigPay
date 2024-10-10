@@ -25,7 +25,7 @@ import { useMenu } from '@/atom/useMenu'
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const theme = useTheme()
   const downXL = useMediaQuery(theme.breakpoints.down('xl'))
-  const { setMenuMaster } = useMenu()
+  const { setMenuMasterState } = useMenu()
 
   const { container, miniDrawer } = useConfig()
 
@@ -34,7 +34,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   // set media wise responsive drawer
   useEffect(() => {
     if (!miniDrawer) {
-      setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !downXL }))
+      setMenuMasterState((prev) => ({
+        ...prev,
+        menuMaster: { ...prev.menuMaster, isDashboardDrawerOpened: !downXL },
+      }))
     }
   }, [downXL])
 

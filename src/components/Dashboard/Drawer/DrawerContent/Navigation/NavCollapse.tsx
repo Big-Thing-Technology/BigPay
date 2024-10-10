@@ -75,8 +75,8 @@ export default function NavCollapse({
   selectedLevel,
 }: Props) {
   const theme = useTheme()
-  const { menuMaster, setMenuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const { menuMaster, setMenuMasterState } = useMenu()
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
   const router = useRouter()
 
@@ -203,7 +203,10 @@ export default function NavCollapse({
 
   useEffect(() => {
     if (menu.url === pathname) {
-      setMenuMaster((prev) => ({ ...prev, openedItem: menu.id! }))
+      setMenuMasterState((prev) => ({
+        ...prev,
+        menuMaster: { ...prev.menuMaster, openedItem: menu.id! },
+      }))
       setSelected(menu.id)
       setAnchorEl(null)
       setOpen(true)

@@ -50,7 +50,7 @@ export default function NavGroup({
 
   const { menuCaption } = useConfig()
   const { menuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
   const [anchorEl, setAnchorEl] = useState<

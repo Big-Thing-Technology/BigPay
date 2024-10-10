@@ -10,7 +10,7 @@ import { useMenu } from '@/atom/useMenu'
 export default function DrawerContent() {
   const theme = useTheme()
   const { menuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'))
 

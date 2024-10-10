@@ -19,8 +19,8 @@ export default function MainDrawer({ window }: Props) {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const { menuMaster, setMenuMaster } = useMenu()
-  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const { menuMaster, setMenuMasterState } = useMenu()
+  const drawerOpen = menuMaster.isDashboardDrawerOpened
 
   // responsive drawer container
   const container = window !== undefined ? () => window().document.body : undefined
@@ -30,7 +30,10 @@ export default function MainDrawer({ window }: Props) {
   const drawerHeader = useMemo(() => <DrawerHeader open={drawerOpen} />, [drawerOpen])
 
   const handlerDrawerOpen = () => {
-    setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !drawerOpen }))
+    setMenuMasterState((prev) => ({
+      ...prev,
+      menuMaster: { ...prev.menuMaster, isDashboardDrawerOpened: !drawerOpen },
+    }))
   }
 
   return (
