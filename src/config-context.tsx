@@ -1,7 +1,7 @@
 import { createContext, ReactElement, useMemo } from 'react'
 
 // project-imports
-import config, { MenuOrientation, ThemeDirection, ThemeMode } from './config'
+import config, { ThemeMode } from './config'
 
 // types
 import { CustomizationProps, FontFamily, I18n, PresetColor } from '@/types/config'
@@ -14,10 +14,7 @@ const initialState: CustomizationProps = {
   onChangeLocalization: () => {},
   onChangeMode: () => {},
   onChangePresetColor: () => {},
-  onChangeDirection: () => {},
   onChangeMiniDrawer: () => {},
-  onChangeThemeLayout: () => {},
-  onChangeMenuOrientation: () => {},
   onChangeMenuCaption: () => {},
   onChangeFontFamily: () => {},
   onChangeContrast: () => {},
@@ -32,7 +29,7 @@ type ConfigProviderProps = {
 }
 
 function ConfigProvider({ children }: ConfigProviderProps) {
-  const [config, setConfig] = useLocalStorage('able-pro-material-next-ts-config', initialState)
+  const [config, setConfig] = useLocalStorage('bigpay-config', initialState)
 
   const onChangeContainer = (container: string) => {
     const containerValue: boolean = container !== 'fluid'
@@ -63,25 +60,10 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     })
   }
 
-  const onChangeDirection = (direction: ThemeDirection) => {
-    setConfig({
-      ...config,
-      themeDirection: direction,
-    })
-  }
-
   const onChangeMiniDrawer = (miniDrawer: boolean) => {
     setConfig({
       ...config,
       miniDrawer,
-    })
-  }
-
-  const onChangeThemeLayout = (direction: ThemeDirection, miniDrawer: boolean) => {
-    setConfig({
-      ...config,
-      miniDrawer,
-      themeDirection: direction,
     })
   }
 
@@ -101,13 +83,6 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     })
   }
 
-  const onChangeMenuOrientation = (layout: MenuOrientation) => {
-    setConfig({
-      ...config,
-      menuOrientation: layout,
-    })
-  }
-
   const onChangeFontFamily = (fontFamily: FontFamily) => {
     setConfig({
       ...config,
@@ -124,10 +99,7 @@ function ConfigProvider({ children }: ConfigProviderProps) {
           onChangeLocalization,
           onChangeMode,
           onChangePresetColor,
-          onChangeDirection,
           onChangeMiniDrawer,
-          onChangeThemeLayout,
-          onChangeMenuOrientation,
           onChangeMenuCaption,
           onChangeFontFamily,
           onChangeContrast,

@@ -1,6 +1,6 @@
 // project-import
 
-import { MenuOrientation, ThemeDirection, ThemeMode } from '@/config'
+import { ThemeMode } from '@/config'
 
 export type FontFamily = string
 export type PresetColor =
@@ -40,14 +40,6 @@ export type DefaultConfigProps = {
    * 'zh'
    */
   i18n: I18n
-
-  /**
-   * the props used for menu orientation (diffrent theme layout).
-   * we provide static below options -
-   * 'vertical' (default)
-   * 'horizontal'
-   */
-  menuOrientation: MenuOrientation
 
   /**
    * the props used for show/hide caption drawer
@@ -96,15 +88,6 @@ export type DefaultConfigProps = {
   presetColor: PresetColor
 
   /**
-   * the props used for default theme direction
-   * explore the default theme
-   * below theme options -
-   * 'ltr' (default)
-   * 'rtl'
-   */
-  themeDirection: ThemeDirection
-
-  /**
    * the props used for theme contrast.
    * set box-shadow .
    * default - false which show card without box-shadow and background default
@@ -118,20 +101,15 @@ export type CustomizationProps = {
   i18n: I18n
   miniDrawer: boolean
   container: boolean
-  menuOrientation: MenuOrientation
   menuCaption: boolean
   mode: ThemeMode
   presetColor: PresetColor
-  themeDirection: ThemeDirection
   themeContrast: boolean
   onChangeContainer: (container: string) => void
   onChangeLocalization: (lang: I18n) => void
   onChangeMode: (mode: ThemeMode) => void
   onChangePresetColor: (theme: PresetColor) => void
-  onChangeDirection: (direction: ThemeDirection) => void
   onChangeMiniDrawer: (miniDrawer: boolean) => void
-  onChangeThemeLayout: (direction: ThemeDirection, miniDrawer: boolean) => void
-  onChangeMenuOrientation: (menuOrientation: MenuOrientation) => void
   onChangeMenuCaption: (menuCaption: string) => void
   onChangeFontFamily: (fontFamily: FontFamily) => void
   onChangeContrast: (themeContrast: string) => void

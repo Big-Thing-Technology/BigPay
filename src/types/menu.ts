@@ -44,7 +44,6 @@ export type MenuProps = {
   openedItem: string
   openedComponent: string
   openedHorizontalItem: string | null
-
   /**
    * Indicate if dashboard layout menu open or not
    */

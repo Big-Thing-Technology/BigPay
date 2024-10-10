@@ -34,7 +34,7 @@ type ThemeCustomizationProps = {
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function ThemeCustomization({ children }: ThemeCustomizationProps) {
-  const { themeDirection, mode, presetColor, fontFamily, themeContrast } = useConfig()
+  const { mode, presetColor, fontFamily, themeContrast } = useConfig()
   const mounted = useIsMounted()
 
   const { setPrefersDarkMode, prefersDarkMode: currentIsDark } = useCatchDarkScheme()
@@ -81,7 +81,6 @@ export default function ThemeCustomization({ children }: ThemeCustomizationProps
           xl: 1440,
         },
       },
-      direction: themeDirection,
       mixins: {
         toolbar: {
           minHeight: HEADER_HEIGHT,
@@ -96,7 +95,7 @@ export default function ThemeCustomization({ children }: ThemeCustomizationProps
       customShadows: themeCustomShadows,
       typography: themeTypography,
     }),
-    [themeDirection, theme, themeTypography, themeCustomShadows]
+    [theme, themeTypography, themeCustomShadows]
   )
 
   const themes: Theme = createTheme(themeOptions)
