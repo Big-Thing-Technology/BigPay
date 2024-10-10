@@ -1,22 +1,14 @@
 import { ReactNode, useMemo } from 'react'
-
-// material-ui
 import { alpha, useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import AppBar, { AppBarProps } from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-
-// project-imports
 import AppBarStyled from './AppBarStyled'
 import HeaderContent from './HeaderContent'
 import IconButton from '@/components/@extended/IconButton'
-
-import useConfig from '@/hooks/useConfig'
-import { useGetMenuMaster } from '@/api/menu'
 import { DRAWER_WIDTH, MINI_DRAWER_WIDTH, ThemeMode } from '@/config'
-
-// assets
 import { HambergerMenu } from 'iconsax-react'
+import { useMenu } from '@/atom/useMenu'
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
@@ -24,23 +16,29 @@ export default function Header() {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const { mode } = useConfig()
-  const { menuMaster } = useGetMenuMaster()
-  const drawerOpen = menuMaster.isDashboardDrawerOpened
+  const { menuMaster, setMenuMaster } = useMenu()
+  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
 
   const isHorizontal = false
 
   // header content
   const headerContent = useMemo(() => <HeaderContent />, [])
 
-  const iconBackColorOpen = mode === ThemeMode.DARK ? 'background.paper' : 'secondary.200'
-  const iconBackColor = mode === ThemeMode.DARK ? 'background.default' : 'secondary.100'
+  const iconBackColorOpen =
+    theme.palette.mode === ThemeMode.DARK ? 'background.paper' : 'secondary.200'
+  const iconBackColor =
+    theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'secondary.100'
+
+  const handlerDrawerOpen = () => {
+    setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !drawerOpen }))
+  }
 
   // common header
   const mainHeader: ReactNode = (
     <Toolbar sx={{ px: { xs: 2, sm: 4.5, lg: 8 } }}>
       <IconButton
         aria-label="open drawer"
+        onClick={() => handlerDrawerOpen()}
         edge="start"
         color="secondary"
         variant="light"

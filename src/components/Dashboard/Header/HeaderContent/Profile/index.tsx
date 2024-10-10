@@ -1,8 +1,10 @@
 import { ReactNode, SyntheticEvent, useRef, useState } from 'react'
 
+// next
+import { useRouter } from 'next/navigation'
+
 // material-ui
 import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import CardContent from '@mui/material/CardContent'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
@@ -14,6 +16,7 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 // project-imports
 import ProfileTab from './ProfileTab'
@@ -22,16 +25,15 @@ import Avatar from '@/components/@extended/Avatar'
 import MainCard from '@/components/MainCard'
 import Transitions from '@/components/@extended/Transitions'
 import IconButton from '@/components/@extended/IconButton'
-
 import { ThemeMode } from '@/config'
 import { Logout, Profile, Setting2 } from 'iconsax-react'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
+import { useInfoUser } from '@/atom/useInfoUser'
 
 // assets
 const avatar1 = 'user/avatar-6.png'
 
-// types
 interface TabPanelProps {
   children?: ReactNode
   dir?: string
@@ -66,11 +68,15 @@ function a11yProps(index: number) {
 
 export default function ProfilePage() {
   const theme = useTheme()
+  const router = useRouter()
+  const { userInfo } = useInfoUser()
 
   const [, setCookies] = useCookies([USER_TOKEN])
   const handleLogout = async () => {
     setCookies(USER_TOKEN, '')
+    router.push('/login')
   }
+
   const anchorRef = useRef<any>(null)
   const [open, setOpen] = useState(false)
   const handleToggle = () => {
@@ -120,7 +126,16 @@ export default function ProfilePage() {
         role={undefined}
         transition
         disablePortal
-        popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [0, 9] } }] }}
+        popperOptions={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 9],
+              },
+            },
+          ],
+        }}
       >
         {({ TransitionProps }) => (
           <Transitions type="grow" position="top-right" in={open} {...TransitionProps}>
@@ -130,7 +145,9 @@ export default function ProfilePage() {
                 width: 290,
                 minWidth: 240,
                 maxWidth: 290,
-                [theme.breakpoints.down('md')]: { maxWidth: 250 },
+                [theme.breakpoints.down('md')]: {
+                  maxWidth: 250,
+                },
                 borderRadius: 1.5,
               }}
             >
@@ -142,7 +159,9 @@ export default function ProfilePage() {
                         <Stack direction="row" spacing={1.25} alignItems="center">
                           <Avatar alt="profile user" src={avatar1} />
                           <Stack>
-                            <Typography variant="subtitle1">username here</Typography>
+                            <Typography variant="subtitle1">
+                              {userInfo ? userInfo.fullName : ''}
+                            </Typography>
                             <Typography variant="body2" color="secondary">
                               UI/UX Designer
                             </Typography>

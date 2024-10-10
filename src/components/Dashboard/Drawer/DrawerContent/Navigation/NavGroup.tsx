@@ -1,33 +1,28 @@
-import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
-import { matchPath, useLocation } from 'react-router'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-// material-ui
-import { useTheme } from '@mui/material/styles'
+import { usePathname } from 'next/navigation'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
-
-// third-party
-// project-imports
-import NavCollapse from './NavCollapse'
-
-import { ThemeMode } from '@/config'
+import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
 import useConfig from '@/hooks/useConfig'
-import { useGetMenuMaster } from '@/api/menu'
-
-// assets
-// types
+import { ThemeMode } from '@/config'
 import { NavItemType } from '@/types/menu'
+import { matchPath } from '@/utils/matchPath'
+import NavCollapse from '@/components/Dashboard/Drawer/DrawerContent/Navigation/NavCollapse'
 import NavItem from '@/components/Dashboard/Drawer/DrawerContent/Navigation/NavItem'
+import { useTheme } from '@mui/material/styles'
+import { useMenu } from '@/atom/useMenu'
+
+// ==============================|| NAVIGATION - GROUP ||============================== //
 
 interface Props {
   item: NavItemType
   lastItem: number
   remItems: NavItemType[]
   lastItemId: string
-  setSelectedID: React.Dispatch<React.SetStateAction<string | undefined>>
+  setSelectedID: React.Dispatch<React.SetStateAction<string | null>>
   setSelectedItems: Dispatch<SetStateAction<string | undefined>>
   selectedItems: string | undefined
   setSelectedLevel: Dispatch<SetStateAction<number>>
@@ -39,28 +34,25 @@ type VirtualElement = {
   contextElement?: Element
 }
 
-// ==============================|| NAVIGATION - GROUP ||============================== //
-
 export default function NavGroup({
   item,
   lastItem,
   remItems,
-  lastItemId,
   setSelectedID,
+  lastItemId,
   setSelectedItems,
   selectedItems,
   setSelectedLevel,
   selectedLevel,
 }: Props) {
   const theme = useTheme()
-  const { pathname } = useLocation()
+  const pathname = usePathname()
 
   const { menuCaption } = useConfig()
-  const { menuMaster } = useGetMenuMaster()
-  const drawerOpen = menuMaster.isDashboardDrawerOpened
+  const { menuMaster } = useMenu()
+  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
 
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
-
   const [anchorEl, setAnchorEl] = useState<
     VirtualElement | (() => VirtualElement) | null | undefined
   >(null)
@@ -79,7 +71,6 @@ export default function NavGroup({
         setCurrentItem(item)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, lastItem, downLG])
 
   const checkOpenForParent = (child: NavItemType[], id: string) => {
@@ -88,7 +79,7 @@ export default function NavGroup({
         checkOpenForParent(ele.children, currentItem.id!)
       }
 
-      if (ele.url && !!matchPath({ path: ele?.link ? ele.link : ele.url, end: true }, pathname)) {
+      if (ele.url && matchPath(ele.link || ele.url, pathname)) {
         setSelectedID(id)
       }
     })
@@ -100,16 +91,7 @@ export default function NavGroup({
         checkOpenForParent(itemCheck.children, currentItem.id!)
       }
 
-      if (
-        itemCheck.url &&
-        !!matchPath(
-          {
-            path: itemCheck?.link ? itemCheck.link : itemCheck.url,
-            end: true,
-          },
-          pathname
-        )
-      ) {
+      if (itemCheck.url && matchPath(itemCheck.link || itemCheck.url, pathname)) {
         setSelectedID(currentItem.id!)
       }
     })
@@ -118,10 +100,9 @@ export default function NavGroup({
   useEffect(() => {
     checkSelectedOnload(currentItem)
     if (openMini) setAnchorEl(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, currentItem])
 
-  const navCollapse = item.children?.map((menuItem, index) => {
+  const navCollapse = item.children?.map((menuItem) => {
     switch (menuItem.type) {
       case 'collapse':
         return (
@@ -140,7 +121,7 @@ export default function NavGroup({
         return <NavItem key={menuItem.id} item={menuItem} level={1} />
       default:
         return (
-          <Typography key={index} variant="h6" color="error" align="center">
+          <Typography key={menuItem.id} variant="h6" color="error" align="center">
             Fix - Group Collapse or Items
           </Typography>
         )
@@ -152,7 +133,8 @@ export default function NavGroup({
       subheader={
         <>
           {item.title ? (
-            drawerOpen && (
+            drawerOpen &&
+            menuCaption && (
               <Box sx={{ pl: 3, mb: 1.5 }}>
                 <Typography
                   variant="h5"

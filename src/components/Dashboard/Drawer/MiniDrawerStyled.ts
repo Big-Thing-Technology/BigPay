@@ -5,32 +5,30 @@ import Drawer from '@mui/material/Drawer'
 // project-imports
 import { DRAWER_WIDTH, MINI_DRAWER_WIDTH, ThemeMode } from '@/config'
 
-const openedMixin = (theme: Theme) =>
-  ({
-    backgroundColor: theme.palette.background.default,
-    width: DRAWER_WIDTH,
-    borderRight: `1px dashed ${theme.palette.mode === ThemeMode.DARK ? theme.palette.secondary[200] : theme.palette.secondary[400]}`,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
-    boxShadow: theme.palette.mode === ThemeMode.DARK ? theme.customShadows.z1 : 'none',
-  }) as CSSObject
+const openedMixin = (theme: Theme): CSSObject => ({
+  backgroundColor: theme.palette.background.default,
+  width: DRAWER_WIDTH,
+  borderRight: `1px dashed ${theme.palette.mode === ThemeMode.DARK ? theme.palette.secondary[200] : theme.palette.secondary[400]}`,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+  boxShadow: theme.palette.mode === ThemeMode.DARK ? theme.customShadows.z1 : 'none',
+})
 
-const closedMixin = (theme: Theme) =>
-  ({
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.default,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: MINI_DRAWER_WIDTH,
-    borderRight: 'none',
-    boxShadow: theme.customShadows.z1,
-  }) as CSSObject
+const closedMixin = (theme: Theme): CSSObject => ({
+  overflow: 'hidden',
+  backgroundColor: theme.palette.background.default,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: MINI_DRAWER_WIDTH,
+  borderRight: 'none',
+  boxShadow: theme.customShadows.z1,
+})
 
 // ==============================|| DRAWER - MINI STYLED ||============================== //
 

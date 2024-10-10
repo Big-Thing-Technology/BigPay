@@ -1,13 +1,9 @@
-import { MouseEvent, useState } from 'react'
-import { useNavigate } from 'react-router'
-
-// material-ui
+import { MouseEvent, useEffect, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-
-// assets
 import { Card, Edit2, Logout, Profile, Profile2User } from 'iconsax-react'
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
@@ -17,8 +13,10 @@ interface Props {
 }
 
 export default function ProfileTab({ handleLogout }: Props) {
-  const navigate = useNavigate()
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState<number>()
+  const router = useRouter()
+  const pathname = usePathname()
+
   const handleListItemClick = (
     event: MouseEvent<HTMLDivElement>,
     index: number,
@@ -27,9 +25,20 @@ export default function ProfileTab({ handleLogout }: Props) {
     setSelectedIndex(index)
 
     if (route && route !== '') {
-      navigate(route)
+      router.push('/client')
     }
   }
+
+  useEffect(() => {
+    const pathToIndex: { [key: string]: number } = {
+      '/apps/profiles/user/personal': 0,
+      '/apps/profiles/account/basic': 1,
+      '/apps/profiles/account/personal': 3,
+      '/apps/invoice/details/1': 4,
+    }
+
+    setSelectedIndex(pathToIndex[pathname] ?? undefined)
+  }, [pathname])
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
@@ -55,7 +64,6 @@ export default function ProfileTab({ handleLogout }: Props) {
         </ListItemIcon>
         <ListItemText primary="View Profile" />
       </ListItemButton>
-
       <ListItemButton
         selected={selectedIndex === 3}
         onClick={(event: MouseEvent<HTMLDivElement>) =>

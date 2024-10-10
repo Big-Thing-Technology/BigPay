@@ -1,5 +1,7 @@
-import { MouseEvent, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { MouseEvent, useEffect, useState } from 'react'
+
+// next
+import { usePathname, useRouter } from 'next/navigation'
 
 // material-ui
 import List from '@mui/material/List'
@@ -14,8 +16,10 @@ import { Clipboard, I24Support, Lock1, Messages1, Profile } from 'iconsax-react'
 // ==============================|| HEADER PROFILE - SETTING TAB ||============================== //
 
 export default function SettingTab() {
-  const navigate = useNavigate()
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState<number>()
+  const router = useRouter()
+  const pathname = usePathname()
+
   const handleListItemClick = (
     event: MouseEvent<HTMLDivElement>,
     index: number,
@@ -23,9 +27,17 @@ export default function SettingTab() {
   ) => {
     setSelectedIndex(index)
     if (route && route !== '') {
-      navigate(route)
+      router.push('client')
     }
   }
+
+  useEffect(() => {
+    const pathToIndex: { [key: string]: number } = {
+      '/apps/profiles/account/settings': 1,
+    }
+
+    setSelectedIndex(pathToIndex[pathname] ?? undefined)
+  }, [pathname])
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>

@@ -5,11 +5,11 @@ import AppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 // project-imports
 import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from '@/config'
 
+// ==============================|| HEADER - APP BAR STYLED ||============================== //
+
 interface Props extends MuiAppBarProps {
   open?: boolean
 }
-
-// ==============================|| HEADER - APP BAR STYLED ||============================== //
 
 const AppBarStyled = styled(AppBar, { shouldForwardProp: (prop) => prop !== 'open' })<Props>(
   ({ theme, open }) => ({

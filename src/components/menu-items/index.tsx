@@ -1,19 +1,12 @@
-// project-imports
-import applications from './applications'
-import widget from './widget'
-import formsTables from './forms-tables'
-import samplePage from './sample-page'
-import chartsMap from './charts-map'
-import support from './support'
-import pages from './pages'
-
-// types
 import { NavItemType } from '@/types/menu'
+import { organization } from '@/components/menu-items/organization'
+import { finance } from '@/components/menu-items/finance'
+import { other } from '@/components/menu-items/other'
 
 // ==============================|| MENU ITEMS ||============================== //
 
-const menuItems: { items: NavItemType[] } = {
-  items: [widget, applications, formsTables, chartsMap, samplePage, pages, support],
+const menuItem: { items: NavItemType[] } = {
+  items: [organization, finance, other],
 }
 
-export default menuItems
+export default menuItem

@@ -1,31 +1,26 @@
 import { useMemo } from 'react'
-
-// material-ui
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
-
-// project-imports
+import Box from '@mui/material/Box'
 import DrawerHeader from './DrawerHeader'
 import DrawerContent from './DrawerContent'
-
 import { DRAWER_WIDTH } from '@/config'
-import { useGetMenuMaster } from '@/api/menu'
+import { useMenu } from '@/atom/useMenu'
 import { MiniDrawerStyled } from './MiniDrawerStyled'
+
+// ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
 interface Props {
   window?: () => Window
 }
 
-// ==============================|| MAIN LAYOUT - DRAWER ||============================== //
-
 export default function MainDrawer({ window }: Props) {
   const theme = useTheme()
   const downLG = useMediaQuery(theme.breakpoints.down('lg'))
 
-  const { menuMaster } = useGetMenuMaster()
-  const drawerOpen = menuMaster.isDashboardDrawerOpened
+  const { menuMaster, setMenuMaster } = useMenu()
+  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
 
   // responsive drawer container
   const container = window !== undefined ? () => window().document.body : undefined
@@ -33,6 +28,10 @@ export default function MainDrawer({ window }: Props) {
   // header content
   const drawerContent = useMemo(() => <DrawerContent />, [])
   const drawerHeader = useMemo(() => <DrawerHeader open={drawerOpen} />, [drawerOpen])
+
+  const handlerDrawerOpen = () => {
+    setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !drawerOpen }))
+  }
 
   return (
     <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1200 }} aria-label="mailbox folders">
@@ -46,9 +45,10 @@ export default function MainDrawer({ window }: Props) {
           container={container}
           variant="temporary"
           open={drawerOpen}
+          onClose={() => handlerDrawerOpen()}
           ModalProps={{ keepMounted: true }}
           sx={{
-            display: { xs: 'block', lg: 'none' },
+            display: { xs: drawerOpen ? 'block' : 'none', lg: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: DRAWER_WIDTH,

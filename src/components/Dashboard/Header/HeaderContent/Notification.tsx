@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 // material-ui
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import Link from '@mui/material/Link'
@@ -16,18 +15,17 @@ import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 // project-imports
 import MainCard from '@/components/MainCard'
+import Avatar from '@/components/@extended/Avatar'
 import IconButton from '@/components/@extended/IconButton'
 import Transitions from '@/components/@extended/Transitions'
 import { ThemeMode } from '@/config'
 
 // assets
 import { Gift, MessageText1, Notification, Setting2 } from 'iconsax-react'
-import Avatar from '@/components/@extended/Avatar'
-
-// types
 
 const actionSX = {
   mt: '6px',
@@ -35,6 +33,7 @@ const actionSX = {
   top: 'auto',
   right: 'auto',
   alignSelf: 'flex-start',
+
   transform: 'none',
 }
 
@@ -92,7 +91,14 @@ export default function NotificationPage() {
         transition
         disablePortal
         popperOptions={{
-          modifiers: [{ name: 'offset', options: { offset: [matchesXs ? -5 : 0, 9] } }],
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [matchesXs ? -5 : 0, 9],
+              },
+            },
+          ],
         }}
       >
         {({ TransitionProps }) => (
@@ -110,7 +116,9 @@ export default function NotificationPage() {
                 width: '100%',
                 minWidth: 285,
                 maxWidth: 420,
-                [theme.breakpoints.down('md')]: { maxWidth: 285 },
+                [theme.breakpoints.down('md')]: {
+                  maxWidth: 285,
+                },
               }}
             >
               <ClickAwayListener onClickAway={handleClose}>

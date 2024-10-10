@@ -1,5 +1,10 @@
+'use client'
+
 import { CSSProperties, ReactElement, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+// next
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 // material-ui
 import { useTheme } from '@mui/material/styles'
@@ -8,7 +13,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs'
 
-// project-imports
+// project import
 import MainCard from '@/components/MainCard'
 
 // assets
@@ -17,8 +22,7 @@ import { ArrowRight2, Buildings2, Home3 } from 'iconsax-react'
 // types
 import { OverrideIcon } from '@/types/root'
 import { NavItemType } from '@/types/menu'
-import menuItems from '@/components/menu-items'
-import { usePathname } from 'next/navigation'
+import menuItem from '@/components/menu-items'
 
 interface BreadcrumbLinkProps {
   title: string
@@ -38,8 +42,8 @@ interface Props {
   heading?: string
   icon?: boolean
   icons?: boolean
-  links?: BreadcrumbLinkProps[]
   maxItems?: number
+  links?: BreadcrumbLinkProps[]
   rightAlign?: boolean
   separator?: OverrideIcon
   title?: boolean
@@ -56,8 +60,8 @@ export default function Breadcrumbs({
   heading,
   icon,
   icons,
-  links,
   maxItems,
+  links,
   rightAlign,
   separator,
   title = true,
@@ -66,6 +70,7 @@ export default function Breadcrumbs({
   ...others
 }: Props) {
   const theme = useTheme()
+  const location = usePathname()
   const [main, setMain] = useState<NavItemType | undefined>()
   const [item, setItem] = useState<NavItemType>()
 
@@ -77,7 +82,7 @@ export default function Breadcrumbs({
     color: theme.palette.secondary.main,
   }
 
-  let customLocation = usePathname()
+  let customLocation = location
 
   // only used for component demo breadcrumbs
   if (customLocation.includes('/components-overview/breadcrumbs')) {
@@ -105,7 +110,7 @@ export default function Breadcrumbs({
   }
 
   useEffect(() => {
-    menuItems?.items?.map((menu: NavItemType) => {
+    menuItem?.items?.map((menu: NavItemType) => {
       if (menu.type && menu.type === 'group') {
         if (menu?.url && menu.url === customLocation) {
           setMain(menu)
@@ -133,16 +138,16 @@ export default function Breadcrumbs({
   if (!custom && main && main.type === 'collapse' && main.breadcrumbs === true) {
     CollapseIcon = main.icon ? main.icon : Buildings2
     mainContent = (
-      <Typography
-        component={Link}
-        to={document.location.pathname}
-        variant="body1"
-        sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-        color={window.location.pathname === main.url ? 'text.secondary' : 'text.primary'}
-      >
-        {icons && <CollapseIcon style={iconSX} />}
-        {main.title}
-      </Typography>
+      <Link href={(main.url as string) || '/'} passHref legacyBehavior>
+        <Typography
+          variant="body1"
+          sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+          color={window.location.pathname === main.url ? 'text.secondary' : 'text.primary'}
+        >
+          {icons && <CollapseIcon style={iconSX} />}
+          {main.title}
+        </Typography>
+      </Link>
     )
     breadcrumbContent = (
       <MainCard
@@ -165,17 +170,22 @@ export default function Breadcrumbs({
               maxItems={maxItems || 8}
               separator={separatorIcon}
             >
-              <Typography
-                component={Link}
-                to="/"
-                variant="body1"
-                sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-                color="text.primary"
-              >
-                {icons && <Home3 style={iconSX} />}
-                {icon && !icons && <Home3 variant="Bold" style={{ ...iconSX, marginRight: 0 }} />}
-                {(!icon || icons) && 'Home'}
-              </Typography>
+              <Link href="/" passHref legacyBehavior>
+                <Typography
+                  variant="body1"
+                  color="text.primary"
+                  sx={{
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {icons && <Home3 style={iconSX} />}
+                  {icon && !icons && <Home3 variant="Bold" style={{ ...iconSX, marginRight: 0 }} />}
+                  {(!icon || icons) && 'Home'}
+                </Typography>
+              </Link>
               {mainContent}
             </MuiBreadcrumbs>
           </Grid>
@@ -200,8 +210,8 @@ export default function Breadcrumbs({
     itemContent = (
       <Typography
         variant="body1"
-        color="text.secondary"
-        sx={{ display: 'flex', alignItems: 'center' }}
+        color="text.primary"
+        sx={{ display: 'flex', fontWeight: 500, alignItems: 'center' }}
       >
         {icons && <ItemIcon style={iconSX} />}
         {itemTitle}
@@ -210,17 +220,22 @@ export default function Breadcrumbs({
 
     let tempContent = (
       <MuiBreadcrumbs aria-label="breadcrumb" maxItems={maxItems || 8} separator={separatorIcon}>
-        <Typography
-          component={Link}
-          to="/"
-          color="text.secondary"
-          variant="h6"
-          sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-        >
-          {icons && <Home3 style={iconSX} />}
-          {icon && !icons && <Home3 variant="Bold" style={{ ...iconSX, marginRight: 0 }} />}
-          {(!icon || icons) && 'Home'}
-        </Typography>
+        <Link href="/" passHref legacyBehavior>
+          <Typography
+            color="text.secondary"
+            variant="h6"
+            sx={{
+              textDecoration: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {icons && <Home3 style={iconSX} />}
+            {icon && !icons && <Home3 variant="Bold" style={{ ...iconSX, marginRight: 0 }} />}
+            {(!icon || icons) && 'Home'}
+          </Typography>
+        </Link>
         {mainContent}
         {itemContent}
       </MuiBreadcrumbs>
@@ -231,19 +246,30 @@ export default function Breadcrumbs({
         <MuiBreadcrumbs aria-label="breadcrumb" maxItems={maxItems || 8} separator={separatorIcon}>
           {links?.map((link: BreadcrumbLinkProps, index: number) => {
             CollapseIcon = link.icon ? link.icon : Buildings2
-
-            return (
+            const key = index.toString()
+            let breadcrumbLink = (
               <Typography
                 key={index}
-                {...(link.to && { component: Link, to: link.to })}
                 variant="body1"
-                sx={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-                color={link.to ? 'text.primary' : 'text.secondary'}
+                sx={{
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  ...(link.to && { fontWeight: 400, cursor: 'pointer' }),
+                }}
+                color={link.to ? 'text.secondary' : 'text.primary'}
               >
                 {link.icon && <CollapseIcon style={iconSX} />}
                 {link.title}
               </Typography>
             )
+            if (link.to) {
+              breadcrumbLink = (
+                <Link key={key} href={link.to} passHref legacyBehavior>
+                  {breadcrumbLink}
+                </Link>
+              )
+            }
+            return breadcrumbLink
           })}
         </MuiBreadcrumbs>
       )

@@ -1,7 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom'
-
-// material-ui
-import Link from '@mui/material/Link'
+import Link from 'next/link'
+import Links from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
@@ -15,35 +13,35 @@ export default function Footer() {
       alignItems="center"
       sx={{ p: '24px 16px 0px', mt: 'auto' }}
     >
-      <Typography variant="caption">&copy; Able Pro ♥ crafted by Team Phoenixcoded</Typography>
+      <Typography variant="caption">&copy; BigPay ♥ crafted by BigPay., Ltd</Typography>
       <Stack spacing={1.5} direction="row" justifyContent="space-between" alignItems="center">
-        <Link
-          component={RouterLink}
-          to="https://ableproadmin.com"
+        <Links
+          component={Link}
+          href="https://ableproadmin.com"
           target="_blank"
           variant="caption"
           color="text.primary"
         >
           Home
-        </Link>
-        <Link
-          component={RouterLink}
-          to="https://phoenixcoded.gitbook.io/able-pro"
+        </Links>
+        <Links
+          component={Link}
+          href="https://phoenixcoded.gitbook.io/able-pro"
           target="_blank"
           variant="caption"
           color="text.primary"
         >
           Documentation
-        </Link>
-        <Link
-          component={RouterLink}
-          to="https://phoenixcoded.authordesk.app/"
+        </Links>
+        <Links
+          component={Link}
+          href="https://phoenixcoded.authordesk.app/"
           target="_blank"
           variant="caption"
           color="text.primary"
         >
           Support
-        </Link>
+        </Links>
       </Stack>
     </Stack>
   )

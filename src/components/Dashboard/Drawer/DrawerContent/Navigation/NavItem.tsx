@@ -1,66 +1,96 @@
-import { Link, matchPath, useLocation } from 'react-router-dom'
+// next
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 // material-ui
 import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 // project-imports
 import Dot from '@/components/@extended/Dot'
 import IconButton from '@/components/@extended/IconButton'
-
 import useConfig from '@/hooks/useConfig'
 import { NavActionType, ThemeMode } from '@/config'
-import { useGetMenuMaster } from '@/api/menu'
 
 // types
-import { LinkTarget, NavItemType } from '@/types/menu'
+import { NavItemType } from '@/types/menu'
+import { useEffect } from 'react'
+import { useMenu } from '@/atom/useMenu'
+
+// ==============================|| NAVIGATION - ITEM ||============================== //
 
 interface Props {
   item: NavItemType
   level: number
   isParents?: boolean
+  setSelectedID?: () => void
 }
 
-// ==============================|| NAVIGATION - ITEM ||============================== //
-
-export default function NavItem({ item, level }: Props) {
+export default function NavItem({ item, level, isParents = false, setSelectedID }: Props) {
   const theme = useTheme()
+  const downLG = useMediaQuery(theme.breakpoints.down('lg'))
+  const { menuMaster, setMenuMaster } = useMenu()
+  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
+  const openItem = menuMaster.menuMaster.openedItem
 
-  const { menuMaster } = useGetMenuMaster()
-  const drawerOpen = menuMaster.isDashboardDrawerOpened
   const { mode } = useConfig()
+  // let itemTarget: LinkTarget = '_self'
+  // if (item.target) {
+  //   itemTarget = '_blank'
+  // }
 
-  let itemTarget: LinkTarget = '_self'
-  if (item.target) {
-    itemTarget = '_blank'
-  }
+  const isSelected = openItem === item.id
 
   const Icon = item.icon!
   const itemIcon = item.icon ? <Icon variant="Bulk" size={drawerOpen ? 20 : 22} /> : false
 
-  const { pathname } = useLocation()
-  const isSelected = !!matchPath({ path: item?.link ? item.link : item.url!, end: false }, pathname)
+  const pathname = usePathname()
 
-  const textColor = mode === ThemeMode.DARK ? 'secondary.400' : 'secondary.main'
+  // active menu item on page load
+  useEffect(() => {
+    if (pathname === item.url) {
+      setMenuMaster((prev) => ({ ...prev, openedHorizontalItem: item.id! }))
+    }
+  }, [pathname])
+
+  const textColor = theme.palette.mode === ThemeMode.DARK ? 'secondary.400' : 'secondary.main'
   const iconSelectedColor = 'primary.main'
+
+  const itemHandler = () => {
+    if (downLG) {
+      setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: false }))
+    }
+
+    if (isParents && setSelectedID) {
+      setSelectedID()
+    }
+  }
+
+  const listItemButtonPl = () => {
+    if (level === 2) return 3.25
+    if (!drawerOpen) return 1.5
+    if (level <= 3) return (level * 20) / 8
+    return (level * 20 + (level - 3) * 10) / 8
+  }
 
   return (
     <Box sx={{ position: 'relative' }}>
       <ListItemButton
         component={Link}
-        to={item.url!}
-        target={itemTarget}
+        href={item.url!}
+        // target={itemTarget}
         disabled={item.disabled}
         selected={isSelected}
         sx={{
           zIndex: 1201,
-          pl: drawerOpen ? `${level * 20}px` : 1.5,
+          pl: listItemButtonPl,
           py: !drawerOpen && level === 1 ? 1.25 : 1,
           ...(drawerOpen && {
             '&:hover': { bgcolor: 'transparent' },
@@ -84,7 +114,7 @@ export default function NavItem({ item, level }: Props) {
             '&.Mui-selected': { '&:hover': { bgcolor: 'transparent' }, bgcolor: 'transparent' },
           }),
         }}
-        // {...(downLG && { onClick: () => handlerDrawerOpen(false) })}
+        onClick={() => itemHandler()}
       >
         {itemIcon && (
           <ListItemIcon
@@ -166,7 +196,7 @@ export default function NavItem({ item, level }: Props) {
               })}
               {...(action.type === NavActionType.LINK && {
                 component: Link,
-                to: action.url,
+                href: action.url,
                 target: action.target ? '_blank' : '_self',
               })}
               color="secondary"

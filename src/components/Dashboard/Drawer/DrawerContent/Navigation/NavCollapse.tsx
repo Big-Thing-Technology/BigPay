@@ -1,7 +1,5 @@
 import { Dispatch, MouseEvent, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { matchPath, useLocation, useNavigate } from 'react-router-dom'
-
-// material-ui
+import { usePathname, useRouter } from 'next/navigation'
 import { styled, useTheme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
@@ -13,23 +11,21 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Popper from '@mui/material/Popper'
 import Typography from '@mui/material/Typography'
-
-// project-imports
 import NavItem from './NavItem'
 import Dot from '@/components/@extended/Dot'
 import IconButton from '@/components/@extended/IconButton'
 import SimpleBar from '@/components/third-party/SimpleBar'
 import Transitions from '@/components/@extended/Transitions'
-
 import { ThemeMode } from '@/config'
-import useConfig from '@/hooks/useConfig'
-import { useGetMenuMaster } from '@/api/menu'
-
-// assets
 import { ArrowDown2, ArrowRight2, ArrowUp2, Copy } from 'iconsax-react'
-
-// types
 import { NavItemType } from '@/types/menu'
+import { useMenu } from '@/atom/useMenu'
+
+type ListItemClick =
+  | React.MouseEvent<HTMLButtonElement>
+  | React.MouseEvent<HTMLAnchorElement>
+  | React.MouseEvent<HTMLDivElement, MouseEvent>
+  | undefined
 
 type VirtualElement = {
   getBoundingClientRect: () => DOMRect
@@ -52,6 +48,8 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     transform: 'translateY(-50%) rotate(45deg)',
     zIndex: 120,
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 }))
 
@@ -77,11 +75,10 @@ export default function NavCollapse({
   selectedLevel,
 }: Props) {
   const theme = useTheme()
-  const navigation = useNavigate()
+  const { menuMaster, setMenuMaster } = useMenu()
+  const drawerOpen = menuMaster.menuMaster.isDashboardDrawerOpened
 
-  const { menuMaster } = useGetMenuMaster()
-  const drawerOpen = menuMaster.isDashboardDrawerOpened
-  const { mode } = useConfig()
+  const router = useRouter()
 
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<string | null | undefined>(null)
@@ -101,21 +98,14 @@ export default function NavCollapse({
     setAnchorElCollapse(null)
   }
 
-  const handleClick = (
-    event:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.MouseEvent<HTMLAnchorElement>
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | undefined,
-    isRedirect: boolean
-  ) => {
+  const handleClick = (event: ListItemClick, isRedirect: boolean) => {
     setAnchorEl(null)
     setSelectedLevel(level)
     if (drawerOpen) {
       setOpen(!open)
       setSelected(!selected ? menu.id : null)
       setSelectedItems(!selected ? menu.id : '')
-      if (menu.url && isRedirect) navigation(`${menu.url}`)
+      if (menu.url && isRedirect) router.push(`${menu.url}`)
     } else {
       setAnchorEl(event?.currentTarget)
     }
@@ -123,7 +113,7 @@ export default function NavCollapse({
 
   const handlerIconLink = () => {
     if (!drawerOpen) {
-      if (menu.url) navigation(`${menu.url}`)
+      if (menu.url) router.push(`${menu.url}`)
       setSelected(menu.id)
     }
   }
@@ -151,7 +141,7 @@ export default function NavCollapse({
     }
   }, [selectedItems, level, selected, miniMenuOpened, drawerOpen, selectedLevel])
 
-  const { pathname } = useLocation()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (pathname === menu.url) {
@@ -180,10 +170,25 @@ export default function NavCollapse({
         if (item.children?.length) {
           checkOpenForParent(item.children, menu.id!)
         }
+        if (pathname && pathname.includes('product-details')) {
+          if (item.url && item.url.includes('product-details')) {
+            setSelected(menu.id)
+            setOpen(true)
+          }
+        }
 
-        if (item.link && !!matchPath({ path: item?.link, end: false }, pathname)) {
-          setSelected(menu.id)
-          setOpen(true)
+        if (pathname && pathname.includes('invoice')) {
+          if (item.url && item.url.includes('invoice')) {
+            setSelected(menu.id)
+            setOpen(true)
+          }
+        }
+
+        if (pathname && pathname.includes('profiles')) {
+          if (item.url && item.url.includes('profiles')) {
+            setSelected(menu.id)
+            setOpen(true)
+          }
         }
 
         if (item.url === pathname) {
@@ -192,10 +197,13 @@ export default function NavCollapse({
         }
       })
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menu.children])
 
   useEffect(() => {
     if (menu.url === pathname) {
+      setMenuMaster((prev) => ({ ...prev, openedItem: menu.id! }))
       setSelected(menu.id)
       setAnchorEl(null)
       setOpen(true)
@@ -233,9 +241,19 @@ export default function NavCollapse({
   const Icon = menu.icon!
   const menuIcon = menu.icon ? <Icon variant="Bulk" size={drawerOpen ? 22 : 24} /> : borderIcon
   const textColor =
-    mode === ThemeMode.DARK ? theme.palette.secondary[400] : theme.palette.secondary.main
+    theme.palette.mode === ThemeMode.DARK
+      ? theme.palette.secondary[400]
+      : theme.palette.secondary.main
   const iconSelectedColor =
-    mode === ThemeMode.DARK && drawerOpen ? theme.palette.text.primary : theme.palette.primary.main
+    theme.palette.mode === ThemeMode.DARK && drawerOpen
+      ? theme.palette.text.primary
+      : theme.palette.primary.main
+  const listItemButtonPl = () => {
+    if (level === 2) return 3.25
+    if (!drawerOpen) return 1.5
+    if (level <= 3) return (level * 20) / 8
+    return (level * 20 + (level - 3) * 10) / 8
+  }
 
   return (
     <>
@@ -248,21 +266,29 @@ export default function NavCollapse({
         })}
         onClick={(e) => handleClick(e, true)}
         sx={{
-          pl: drawerOpen ? `${level === 1 ? 20 : level * 20 - 10}px` : 1.5,
+          pl: listItemButtonPl,
           py: !drawerOpen && level === 1 ? 1.25 : 1,
-          ...(drawerOpen && {
-            mx: 1.25,
-            my: 0.5,
-            borderRadius: 1,
-            '&:hover': { bgcolor: mode === ThemeMode.DARK ? 'divider' : 'secondary.200' },
-            '&.Mui-selected': { color: iconSelectedColor },
-          }),
+          ...(drawerOpen &&
+            level === 1 && {
+              mx: 1.25,
+              my: 0.5,
+              borderRadius: 1,
+              '&:hover': {
+                bgcolor: theme.palette.mode === ThemeMode.DARK ? 'divider' : 'secondary.200',
+              },
+              '&.Mui-selected': {
+                color: iconSelectedColor,
+              },
+            }),
           ...(!drawerOpen && {
             px: 2.75,
-            justifyContent: 'center',
-            '&:hover': { bgcolor: 'transparent' },
+            '&:hover': {
+              bgcolor: 'transparent',
+            },
             '&.Mui-selected': {
-              '&:hover': { bgcolor: 'transparent' },
+              '&:hover': {
+                bgcolor: 'transparent',
+              },
               bgcolor: 'transparent',
             },
           }),
@@ -288,14 +314,17 @@ export default function NavCollapse({
                 alignItems: 'center',
                 justifyContent: 'center',
                 '&:hover': {
-                  bgcolor: mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.200',
+                  bgcolor:
+                    theme.palette.mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.200',
                 },
               }),
               ...(!drawerOpen &&
                 isSelected && {
-                  bgcolor: mode === ThemeMode.DARK ? 'secondary.100' : 'primary.lighter',
+                  bgcolor:
+                    theme.palette.mode === ThemeMode.DARK ? 'secondary.100' : 'primary.lighter',
                   '&:hover': {
-                    bgcolor: mode === ThemeMode.DARK ? 'secondary.200' : 'primary.lighter',
+                    bgcolor:
+                      theme.palette.mode === ThemeMode.DARK ? 'secondary.200' : 'primary.lighter',
                   },
                 }),
             }}
@@ -382,8 +411,17 @@ export default function NavCollapse({
             open={miniMenuOpened}
             anchorEl={anchorEl}
             placement="right-start"
-            style={{ zIndex: 2001 }}
-            popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [-12, 1] } }] }}
+            sx={{ zIndex: 2001 }}
+            popperOptions={{
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [-12, 1],
+                  },
+                },
+              ],
+            }}
           >
             {({ TransitionProps }) => (
               <Transitions in={miniMenuOpened} {...TransitionProps}>
@@ -393,8 +431,7 @@ export default function NavCollapse({
                     mt: 1.5,
                     boxShadow: theme.customShadows.z1,
                     backgroundImage: 'none',
-                    border: '1px solid ',
-                    borderColor: 'divider',
+                    border: `1px solid ${theme.palette.divider}`,
                   }}
                 >
                   <ClickAwayListener onClickAway={handleClose}>
@@ -416,7 +453,7 @@ export default function NavCollapse({
       </ListItemButton>
       {drawerOpen && !menu?.isDropdown && (
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <List sx={{ p: 0 }}>{navCollapse}</List>
+          <List sx={{ py: 0, px: level <= 1 ? 1.5 : 0 }}>{navCollapse}</List>
         </Collapse>
       )}
       {drawerOpen && menu?.isDropdown && (

@@ -1,18 +1,42 @@
 'use client'
 
-import { Outlet } from 'react-router-dom'
+import { ReactNode, useEffect } from 'react'
 
-import Box from '@mui/material/Box'
+// material-ui
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
-import Drawer from './Drawer'
-import Breadcrumbs from '@/components/@extended/Breadcrumbs'
-import { DRAWER_WIDTH } from '@/config'
-import useConfig from '@/hooks/useConfig'
-import Header from '@/components/Dashboard/Header'
+import Box from '@mui/material/Box'
 
-export default function MainLayout() {
-  const { container } = useConfig()
+// project-imports
+import Drawer from './Drawer'
+import Header from './Header'
+import Footer from './Footer'
+import Breadcrumbs from '@/components/@extended/Breadcrumbs'
+import useConfig from '@/hooks/useConfig'
+import { DRAWER_WIDTH } from '@/config'
+import { useMenu } from '@/atom/useMenu'
+
+// assets
+
+// ==============================|| MAIN LAYOUT ||============================== //
+
+export default function DashboardLayout({ children }: { children: ReactNode }) {
+  const theme = useTheme()
+  const downXL = useMediaQuery(theme.breakpoints.down('xl'))
+  const { setMenuMaster } = useMenu()
+
+  const { container, miniDrawer } = useConfig()
+
+  const isHorizontal = false
+
+  // set media wise responsive drawer
+  useEffect(() => {
+    if (!miniDrawer) {
+      setMenuMaster((prev) => ({ ...prev, isDashboardDrawerOpened: !downXL }))
+    }
+  }, [downXL])
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
@@ -21,22 +45,22 @@ export default function MainLayout() {
 
       <Box
         component="main"
-        sx={{ width: `calc(100% - ${DRAWER_WIDTH}px)`, flexGrow: 1, p: { xs: 2, md: 3 } }}
+        sx={{ width: `calc(100% - ${DRAWER_WIDTH}px)`, flexGrow: 1, p: { xs: 1, sm: 3 } }}
       >
-        <Toolbar sx={{ mt: 'inherit', mb: 'inherit' }} />
+        <Toolbar sx={{ mt: isHorizontal ? 8 : 'inherit', mb: isHorizontal ? 2 : 'inherit' }} />
         <Container
           maxWidth={container ? 'xl' : false}
           sx={{
-            xs: 0,
-            ...(container && { px: { xs: 0, md: 2 } }),
+            ...(container && { px: { xs: 0, sm: 2 } }),
             position: 'relative',
-            minHeight: 'calc(100vh - 110px)',
+            minHeight: 'calc(100vh - 124px)',
             display: 'flex',
             flexDirection: 'column',
           }}
         >
           <Breadcrumbs />
-          <Outlet />
+          {children}
+          <Footer />
         </Container>
       </Box>
     </Box>
