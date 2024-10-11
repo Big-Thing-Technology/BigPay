@@ -29,8 +29,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   const { container, miniDrawer } = useConfig()
 
-  const isHorizontal = false
-
   // set media wise responsive drawer
   useEffect(() => {
     if (!miniDrawer) {
@@ -50,7 +48,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         component="main"
         sx={{ width: `calc(100% - ${DRAWER_WIDTH}px)`, flexGrow: 1, p: { xs: 1, sm: 3 } }}
       >
-        <Toolbar sx={{ mt: isHorizontal ? 8 : 'inherit', mb: isHorizontal ? 2 : 'inherit' }} />
+        <Toolbar sx={{ mt: 'inherit', mb: 'inherit' }} />
         <Container
           maxWidth={container ? 'xl' : false}
           sx={{

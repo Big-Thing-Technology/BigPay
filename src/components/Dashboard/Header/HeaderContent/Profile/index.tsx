@@ -1,9 +1,4 @@
 import { ReactNode, SyntheticEvent, useRef, useState } from 'react'
-
-// next
-import { useRouter } from 'next/navigation'
-
-// material-ui
 import { useTheme } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
 import CardContent from '@mui/material/CardContent'
@@ -17,8 +12,6 @@ import Tabs from '@mui/material/Tabs'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-
-// project-imports
 import ProfileTab from './ProfileTab'
 import SettingTab from './SettingTab'
 import Avatar from '@/components/@extended/Avatar'
@@ -30,6 +23,7 @@ import { Logout, Profile, Setting2 } from 'iconsax-react'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
 import { useInfoUser } from '@/atom/useInfoUser'
+import { firebaseAuth } from '@/lib/firebase/config'
 
 // assets
 const avatar1 = 'user/avatar-6.png'
@@ -68,13 +62,17 @@ function a11yProps(index: number) {
 
 export default function ProfilePage() {
   const theme = useTheme()
-  const router = useRouter()
-  const { userInfo } = useInfoUser()
+  const { userInfo, clearValue } = useInfoUser()
 
-  const [, setCookies] = useCookies([USER_TOKEN])
+  const [, , removeCookies] = useCookies([USER_TOKEN])
   const handleLogout = async () => {
-    setCookies(USER_TOKEN, '')
-    router.push('/login')
+    clearValue()
+    removeCookies(USER_TOKEN)
+    try {
+      await firebaseAuth.signOut()
+    } catch (e) {
+      throw new Error('Google sign in failed', e || '')
+    }
   }
 
   const anchorRef = useRef<any>(null)
