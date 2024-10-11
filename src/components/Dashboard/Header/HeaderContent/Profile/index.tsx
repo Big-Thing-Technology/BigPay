@@ -9,7 +9,6 @@ import Popper from '@mui/material/Popper'
 import Stack from '@mui/material/Stack'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ProfileTab from './ProfileTab'
@@ -17,16 +16,12 @@ import SettingTab from './SettingTab'
 import Avatar from '@/components/@extended/Avatar'
 import MainCard from '@/components/MainCard'
 import Transitions from '@/components/@extended/Transitions'
-import IconButton from '@/components/@extended/IconButton'
 import { ThemeMode } from '@/config'
-import { Logout, Profile, Setting2 } from 'iconsax-react'
+import { Profile, Setting2 } from 'iconsax-react'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
 import { useInfoUser } from '@/atom/useInfoUser'
 import { firebaseAuth } from '@/lib/firebase/config'
-
-// assets
-const avatar1 = 'user/avatar-6.png'
 
 interface TabPanelProps {
   children?: ReactNode
@@ -115,7 +110,7 @@ export default function ProfilePage() {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <Avatar alt="profile user" src={avatar1} />
+        <Avatar alt={userInfo?.fullName || 'Avatar'} src={userInfo?.avatar} />
       </ButtonBase>
       <Popper
         placement="bottom-end"
@@ -155,28 +150,16 @@ export default function ProfilePage() {
                     <Grid container justifyContent="space-between" alignItems="center">
                       <Grid item>
                         <Stack direction="row" spacing={1.25} alignItems="center">
-                          <Avatar alt="profile user" src={avatar1} />
+                          <Avatar alt={userInfo?.fullName || 'Avatar'} src={userInfo?.avatar} />
                           <Stack>
                             <Typography variant="subtitle1">
                               {userInfo ? userInfo.fullName : ''}
                             </Typography>
                             <Typography variant="body2" color="secondary">
-                              UI/UX Designer
+                              {userInfo ? userInfo.email : ''}
                             </Typography>
                           </Stack>
                         </Stack>
-                      </Grid>
-                      <Grid item>
-                        <Tooltip title="Logout">
-                          <IconButton
-                            size="large"
-                            color="error"
-                            sx={{ p: 1 }}
-                            onClick={handleLogout}
-                          >
-                            <Logout variant="Bulk" />
-                          </IconButton>
-                        </Tooltip>
                       </Grid>
                     </Grid>
                   </CardContent>

@@ -13,7 +13,7 @@ export default function Footer() {
       alignItems="center"
       sx={{ p: '24px 16px 0px', mt: 'auto' }}
     >
-      <Typography variant="caption">&copy; BigPay ♥ crafted by BigPay., Ltd</Typography>
+      <Typography variant="caption">&copy; BigPay ♥ crafted by BigThing., Ltd</Typography>
       <Stack spacing={1.5} direction="row" justifyContent="space-between" alignItems="center">
         <Links
           component={Link}

@@ -82,12 +82,8 @@ export default function Breadcrumbs({
     color: theme.palette.secondary.main,
   }
 
-  let customLocation = location
+  const customLocation = location
 
-  // only used for component demo breadcrumbs
-  if (customLocation.includes('/components-overview/breadcrumbs')) {
-    customLocation = '/apps/customer/customer-card'
-  }
   // set active item state
   const getCollapse = (menu: NavItemType) => {
     if (!custom && menu.children) {

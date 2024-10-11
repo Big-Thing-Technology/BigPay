@@ -75,7 +75,6 @@ function MainCard(
       sx={{
         position: 'relative',
         border: border ? '1px solid' : 'none',
-        borderRadius: 1.5,
         borderColor: theme.palette.divider,
         ...(((themeContrast && boxShadow) || shadow) && {
           boxShadow: shadow || theme.customShadows.z1,

@@ -10,19 +10,21 @@ import { To } from 'history'
 
 // project-imports
 import Logo from './LogoMain'
-import { routes } from '@/constant/routes'
+import LogoIcon from './LogoIcon'
+import { APP_CLIENT_PATH } from '@/config'
 
 // ==============================|| MAIN LOGO ||============================== //
 
 interface Props {
+  isIcon?: boolean
   sx?: SxProps
   to?: To
 }
 
-export default function LogoSection({ sx, to }: Props) {
+export default function LogoSection({ isIcon, sx, to }: Props) {
   return (
-    <ButtonBase disableRipple component={Link} href={!to ? routes.home : to} sx={sx}>
-      <Logo />
+    <ButtonBase disableRipple component={Link} href={!to ? APP_CLIENT_PATH : to} sx={sx}>
+      {isIcon ? <LogoIcon /> : <Logo />}
     </ButtonBase>
   )
 }

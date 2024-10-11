@@ -19,8 +19,6 @@ export default function Header() {
   const { menuMaster, setMenuMasterState } = useMenu()
   const drawerOpen = menuMaster.isDashboardDrawerOpened
 
-  const isHorizontal = false
-
   // header content
   const headerContent = useMemo(() => <HeaderContent />, [])
 
@@ -67,14 +65,10 @@ export default function Header() {
       bgcolor: alpha(theme.palette.background.default, 0.8),
       backdropFilter: 'blur(8px)',
       zIndex: 1200,
-      width: isHorizontal
-        ? '100%'
-        : {
-            xs: '100%',
-            lg: drawerOpen
-              ? `calc(100% - ${DRAWER_WIDTH}px)`
-              : `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
-          },
+      width: {
+        xs: '100%',
+        lg: drawerOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
+      },
     },
   }
 
