@@ -28,7 +28,7 @@ export default function DrawerHeader({ open }: Props) {
         paddingLeft: open ? '24px' : 0,
       }}
     >
-      <Logo sx={{ width: open ? 'auto' : 52, height: 'auto' }} />
+      <Logo isIcon={!open} sx={{ width: open ? 'auto' : 52, height: 'auto' }} />
     </DrawerHeaderStyled>
   )
 }

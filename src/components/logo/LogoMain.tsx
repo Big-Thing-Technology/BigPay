@@ -19,11 +19,12 @@ export default function LogoMain() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        maxHeight: '100px',
+        maxHeight: '50px',
+        maxWidth: '170px',
         overflow: 'hidden',
       }}
     >
-      <Image src="logo/4.svg" alt="icon logo" width="300" height="200" />
+      <Image src="logo/4.svg" alt="icon logo" width="200" height="200" />
     </div>
   )
 }

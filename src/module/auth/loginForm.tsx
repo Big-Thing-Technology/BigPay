@@ -11,6 +11,7 @@ import { USER_TOKEN } from '@/utils/cookies-key'
 import AuthCard from '@/module/auth/AuthCard'
 import AuthWrapper from '@/module/auth/AuthWrapper'
 import AuthSocButton from '@/module/auth/AuthSocButton'
+import { APP_LANDING_PATH } from '@/config'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
@@ -37,7 +38,7 @@ export default function LoginForm() {
       <Grid container spacing={3} sx={{ minHeight: '100%', alignContent: 'space-between' }}>
         <Grid item xs={12}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <LogoSection />
+            <LogoSection to={APP_LANDING_PATH} />
           </Stack>
         </Grid>
         <Grid item xs={12} sx={{ '& > div': { margin: '24px auto' } }}>
