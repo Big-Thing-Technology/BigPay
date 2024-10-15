@@ -1,5 +1,4 @@
 import { TValidateFunction } from '@bigthing/backend-utils'
-import { UpdateOrganizationReq } from '../update-organization-info'
 import prisma from '../../../prisma/instance'
 
 /**
@@ -21,10 +20,10 @@ export const IS_ORGANIZATION_NAME: TValidateFunction<{}, string> = async (
   return { ...error, [key]: '' }
 }
 
-export const IS_ORGANIZATION_ID: TValidateFunction<UpdateOrganizationReq, string> = async (
-  error: Record<keyof UpdateOrganizationReq, string>,
+export const IS_EXIST_ORGANIZATION_ID: TValidateFunction<{}, string> = async (
+  error: Record<keyof {}, string>,
   value: string,
-  key: keyof UpdateOrganizationReq
+  key: keyof {}
 ) => {
   if (typeof value === 'undefined' || value === null) {
     return { ...error, [key]: 'idRequired' }
