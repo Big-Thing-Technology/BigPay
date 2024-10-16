@@ -53,7 +53,7 @@ model Organization {
 model PendingOrgMember {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   email           String
-  invitationToken String
+  invitationToken String       @unique
   expiredDate     DateTime
   createdDate     DateTime     @default(now())
   updatedDate     DateTime?

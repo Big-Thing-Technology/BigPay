@@ -28,11 +28,15 @@ export const IS_EXIST_ORGANIZATION_ID: TValidateFunction<{}, string> = async (
   if (typeof value === 'undefined' || value === null) {
     return { ...error, [key]: 'idRequired' }
   }
-  const foundOrganization = await prisma.organization.findUnique({
-    where: { id: value, isDeleted: false },
-  })
-  if (!foundOrganization) {
-    return { ...error, [key]: 'idNotFound' }
+  try {
+    const foundOrganization = await prisma.organization.findUnique({
+      where: { id: value, isDeleted: false },
+    })
+    if (!foundOrganization) {
+      return { ...error, [key]: 'organizationNotFound' }
+    }
+  } catch (e) {
+    return { ...error, [key]: 'invalidId' }
   }
 
   return { ...error, [key]: '' }

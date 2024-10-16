@@ -36,7 +36,7 @@ export const updateOrganizationStatus = async ({
     }
   }
 
-  // Only allow admin recover deleted organization
+  // Only system admin can recover deleted organization
   if (foundUser.isAdmin) {
     const updatedOrganization = await prisma.organization.update({
       where: {
