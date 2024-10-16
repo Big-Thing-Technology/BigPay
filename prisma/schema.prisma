@@ -37,16 +37,28 @@ model OrgMember {
 }
 
 model Organization {
-  id                 String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
   name               String
   members            OrgMember[]
-  active             Boolean     @default(true)
-  isDeleted          Boolean     @default(false)
+  active             Boolean            @default(true)
+  isDeleted          Boolean            @default(false)
   products           Product[]
-  transactionsAmount Int         @default(0)
-  balance            Float       @default(0)
-  createdDate        DateTime    @default(now())
+  transactionsAmount Int                @default(0)
+  balance            Float              @default(0)
+  createdDate        DateTime           @default(now())
   updatedDate        DateTime?
+  PendingOrgMember   PendingOrgMember[]
+}
+
+model PendingOrgMember {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  email           String
+  invitationToken String       @unique
+  expiredDate     DateTime
+  createdDate     DateTime     @default(now())
+  updatedDate     DateTime?
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  organizationId  String       @db.ObjectId
 }
 
 model Product {

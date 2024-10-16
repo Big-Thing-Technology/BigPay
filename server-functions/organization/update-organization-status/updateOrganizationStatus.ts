@@ -26,6 +26,7 @@ export const updateOrganizationStatus = async ({
     }
   }
 
+  // Check user is existed
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
@@ -36,7 +37,7 @@ export const updateOrganizationStatus = async ({
     }
   }
 
-  // Only allow admin recover deleted organization
+  // Only system admin can recover deleted organization
   if (foundUser.isAdmin) {
     const updatedOrganization = await prisma.organization.update({
       where: {

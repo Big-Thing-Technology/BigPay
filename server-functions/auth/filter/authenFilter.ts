@@ -1,4 +1,4 @@
-import { PipelineResult } from '@bigthing/backend-utils'
+import { logger, PipelineResult } from '@bigthing/backend-utils'
 import prisma from '../../../prisma/instance'
 import { decodedFirebaseToken } from '../../shared/decodedFirebaseToken'
 import { getUserAndRole } from '../../user/get-user-and-role/getUserAndRole'
@@ -15,6 +15,7 @@ export const authenFilter = async (req: Request): Promise<PipelineResult<null>> 
   }
 
   try {
+    // Check user is existed
     const { uid } = await decodedFirebaseToken(token)
 
     const findUser = await prisma.user.findUnique({
@@ -38,6 +39,7 @@ export const authenFilter = async (req: Request): Promise<PipelineResult<null>> 
       }
     }
   } catch (e) {
+    logger.error('error-authen', e)
     return {
       status: 401,
       message: 'unauthorized',
