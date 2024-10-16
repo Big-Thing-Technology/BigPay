@@ -6,6 +6,7 @@ import { GetOrganizationByUserRes } from './getOrganizationByUserRes'
 export const getOrganizationByUser = async (
   token: string
 ): Promise<PipelineResult<GetOrganizationByUserRes | null>> => {
+  // Check user is existed
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {

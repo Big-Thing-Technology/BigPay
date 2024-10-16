@@ -15,6 +15,7 @@ export const authenFilter = async (req: Request): Promise<PipelineResult<null>> 
   }
 
   try {
+    // Check user is existed
     const { uid } = await decodedFirebaseToken(token)
 
     const findUser = await prisma.user.findUnique({

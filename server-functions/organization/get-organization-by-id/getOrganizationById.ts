@@ -10,6 +10,7 @@ export const getOrganizationById = async ({
   id: string
   token: string
 }): Promise<PipelineResult<GetOrganizationByIdRes | null>> => {
+  // Check user is existed
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {

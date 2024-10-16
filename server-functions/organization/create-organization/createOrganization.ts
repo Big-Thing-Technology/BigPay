@@ -23,6 +23,7 @@ export const createOrganization = async (
     }
   }
 
+  // Check user is existed
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {

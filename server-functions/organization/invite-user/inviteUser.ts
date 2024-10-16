@@ -6,6 +6,7 @@ import prisma from '../../../prisma/instance'
 /**
  * Invite registered or non-registered user into the organization.
  * Only owner of organization can invite.
+ * return if request user is member already
  * Send email with invite link into fellow email.
  * @param token
  * @param req
@@ -28,6 +29,7 @@ export const inviteUser = async ({
     }
   }
 
+  // Check user is existed
   const { uid } = await decodedFirebaseToken(token)
   const foundUser = await prisma.user.findUnique({ where: { username: uid as string } })
   if (!foundUser) {
@@ -50,6 +52,17 @@ export const inviteUser = async ({
     return {
       status: 400,
       message: 'onlyOwnerCanInvite',
+      data: null,
+    }
+  }
+
+  const existOrgMember = await prisma.orgMember.findMany({
+    where: { organizationId: foundOrganization?.id, user: { email: req.email } },
+  })
+  if (existOrgMember) {
+    return {
+      status: 200,
+      message: 'userAlreadyMember',
       data: null,
     }
   }
