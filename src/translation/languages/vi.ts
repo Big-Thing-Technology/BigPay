@@ -62,6 +62,7 @@ const signInScreen = {
   signInWithGoogle: 'Đăng nhập bằng Google',
   signInWithFacebook: 'Đăng nhập bằng Facebook',
   signInWithTwitter: 'Đăng nhập bằng Twitter',
+  loginSuccessfully: 'Đăng nhập thành công',
 }
 
 const startUpScreen = {
@@ -95,6 +96,7 @@ const error = {
   passwordNotMatch: 'Sai mật khẩu',
   eSignInTitle: 'Không Thể Đăng Nhập',
   wrongLoginOtp: 'Sai mã OTP',
+  errorLoginPleaseReload: 'Lỗi đăng nhập. Vui lòng tải lại trang',
 }
 
 export const vi = {

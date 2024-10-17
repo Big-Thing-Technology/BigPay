@@ -62,6 +62,7 @@ const signInScreen = {
   signInWithGoogle: 'Sign In with Google',
   signInWithFacebook: 'Sign In with Facebook',
   signInWithTwitter: 'Sign In with Twitter',
+  loginSuccessfully: 'Login successfully',
 }
 
 const startUpScreen = {
@@ -95,6 +96,7 @@ const error = {
   passwordNotMatch: 'Wrong password',
   eSignInTitle: 'Sign In Error',
   wrongLoginOtp: 'Wrong OTP',
+  errorLoginPleaseReload: 'Sign in error. Please reload page',
 }
 
 export const en = {

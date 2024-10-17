@@ -39,7 +39,7 @@ export const AuthWrapper = ({ children }: { children: any }) => {
             }}
           >
             <picture>
-              <source media="(prefers-color-scheme: dark)" srcSet="/logo/8.svg" />
+              <source media="(prefers-color-scheme: dark)" srcSet="/logo/8-resized.svg" />
               <img
                 onClick={() => router.push('/')}
                 src="/logo/4-resized.svg"
