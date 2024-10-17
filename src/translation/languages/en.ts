@@ -55,100 +55,21 @@ const common = {
   backLogin: 'Back to login',
   comfirm: 'Comfirm',
 }
-const signUp = {
-  createAccount: 'Create account',
-  createAccountDes:
-    'To create a new account, please reach out to your system administrator for assistance. They will provide the necessary access and credentials to get you started.',
-}
-const signIn = {
-  emailOrUsername: 'Email or username',
-  inputEmail: 'Enter your email or username',
-  inputEmailOnly: 'Enter your email',
-  enterOtp: 'Enter OTP',
-  remember: 'Remember me',
-  notFoundUsername: 'Username not found',
-  backLogin: 'Back to login',
-  dontReceiveEmail: "Don't receive the email? ",
-  clickResend: 'Click to resend',
-  submitOtp: 'Submit OTP',
-  enterTheCode: 'Enter the Code',
-  enterTheCodeDes: 'Enter the verification code that we sent to ',
-  createNewPassword: 'Create new password',
-  passwordStrength: 'Passwork strength',
-  passwordCf: 'Comfirm Password',
-  passwordCfNotMatch: 'Password not match with Comfirm Password',
-  Poor: 'Poor',
-  Weak: 'Weak',
-  Normal: 'Normal',
-  Good: 'Good',
-  passRequired1: '• Minimum 8 characters',
-  passRequired2: '• At least one uppercase character',
-  passRequired3: '• At least one special character',
-  passRequired4: '• At least one numeric character',
-  emailNotFound: 'Email not found',
-  invalidEmail: 'Email is invalid',
-  invalidRequest: 'Error',
+
+const signInScreen = {
+  welcomeToTheBigpay: 'Welcome to the BigPay',
+  signInWithYourAccount: 'Sign in with your account.',
+  signInWithGoogle: 'Sign In with Google',
+  signInWithFacebook: 'Sign In with Facebook',
+  signInWithTwitter: 'Sign In with Twitter',
 }
 
-const board = {
-  boardSetting: 'Board settings',
-  renameBoard: 'Rename board',
-  watchBoarddescription: 'You will be noticed of any change in this board',
-  trackingBoarddescription:
-    'You will be noticed of any changes to those cards you are involved as creator or member',
-  muteBoarddescription: 'You will never be notified of any changes in this board',
-  changeWatch: 'Change watch',
-  sortBoard: 'Sort board',
-  dueDate: 'Due date',
-  titleAlphabetically: 'Title (Alphabetically)',
-  createdAtNewest: 'Created At (Newest first)',
-  createdAtOldest: 'Created At (Oldest first)',
-  newBoard: 'New Board',
-  enterBoardName: 'Enter board name',
-  labels: 'Labels',
-  typeNameOfLabel: 'Type name of label',
-  newLabel: 'New label',
-  addLabels: 'Add labels',
-  members: 'Members',
-  addMembers: 'Add members',
-  boardName: 'Board name',
-  boardStart: 'Board start',
-  boardNameRequired: 'Board name is required',
-  addBoard: 'Add board',
-  lists: 'Lists',
-  list: 'List',
-  create: 'Create',
-  update: 'Update',
-  detail: 'Detail',
-  swimlane: 'Swimlane',
-  board: 'Board',
-}
-
-const swimlane = {
-  newSwimlane: 'New swimlane',
-  enterSwimlaneName: 'Enter swimlane name',
-  renameSwimlane: ' Rename swimlane',
-}
-
-const list = {
-  newList: 'New list',
-  enterListName: 'Enter list name',
-}
-
-const admin = {
-  admin: 'Admin',
-  newUser: 'New User',
-  fullName: 'Full name',
-  username: 'Username',
-  editUser: 'Edit user',
-  editInfo: 'Edit Info',
-  assignAsAdmin: 'Assign as admin',
-  revokeFromAdmin: 'Revoke from admin',
-  deactivate: 'Deactivate',
-  activate: 'Activate',
-  delete: 'Delete',
-  owner: 'Owner',
-  setDefault: 'Set as default',
+const startUpScreen = {
+  createOrganization: 'Create First Organization',
+  organizationName: 'Organization name',
+  enterOrganizationName: 'Enter organization name',
+  createOrganizationBtn: 'Create Organization',
+  createFirstOrganizationSuccessfully: 'Create first organization successfully!',
 }
 
 const notification = {
@@ -156,13 +77,6 @@ const notification = {
   noNotificationsMessage: 'You have no notifications right now. Come back later.',
 }
 
-const setting = {
-  allBoards: 'All boards',
-  archive: 'Archive',
-  filesManager: 'Files manager',
-  adminPanel: 'Admin Panel',
-  profileSetting: 'Profile setting',
-}
 const error = {
   backToHome: 'Back to Home',
 
@@ -183,51 +97,10 @@ const error = {
   wrongLoginOtp: 'Wrong OTP',
 }
 
-const role = {
-  access: 'Access',
-  roleName: 'Role name',
-  newRole: 'Add new Role',
-  roleNamePlaceHolder: 'Give your role a unique name',
-  roleDescriptionPlaceHolder:
-    'Briefly describe what this role means and what people with this role can do',
-  editRole: ' Edit role',
-  searchRole: 'Search role',
-  createRole: 'Create role',
-  addUser: 'Add user',
-  removeRole: 'Remove role',
-  deleteRole: 'Delete role',
-
-  deleteRoleMess: 'Are you sure you want to delete this role? This action cannot be undone.',
-  deleteRoleTitle: 'Delete role?',
-  updateRole: 'Update role',
-  totalUsers: 'Total users',
-}
-const user = {
-  confirmPassword: 'Confirm Password',
-  oldPassword: 'Old Password',
-  newPassword: 'New Password',
-  typeConfirmPassword: 'Type confirm password',
-  typeOldPassword: 'Type old password',
-  typeNewPassword: 'Type new password',
-  oldPasswordRequired: 'Old password is required',
-  newPasswordRequired: 'New password is required',
-  cfPasswordRequired: 'Confirm password is required',
-  newPasswordMatch: 'New password cannot be the same as old password',
-  cfPasswordNotMatch: 'New password and confirm password must match',
-  fullNameRequired: 'Full name is required',
-  emailRequired: 'Email is required',
-}
 export const en = {
   ...common,
-  ...signIn,
-  ...board,
-  ...swimlane,
-  ...list,
-  ...admin,
   ...notification,
-  ...setting,
   ...error,
-  ...role,
-  ...user,
-  ...signUp,
+  ...signInScreen,
+  ...startUpScreen,
 }

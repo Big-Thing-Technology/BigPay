@@ -7,12 +7,14 @@ import { firebaseAuth } from '@/lib/firebase/config'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
 import AuthSocButton from '@/module/auth/auth-soc-button'
+import { useTranslation } from '@/translation'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
 const imgGoogle = 'logo/google.svg'
 
 export default function LoginForm() {
+  const { t } = useTranslation()
   const [, setCookies] = useCookies([USER_TOKEN])
 
   const handleGoogleSignIn = async () => {
@@ -33,10 +35,10 @@ export default function LoginForm() {
       <Grid item xs={12} sx={{ textAlign: 'center' }}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="h4">Welcome to the BigPay</Typography>
+            <Typography variant="h4">{t('welcomeToTheBigpay')}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography>Sign in with your account.</Typography>
+            <Typography>{t('signInWithYourAccount')}</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -46,7 +48,7 @@ export default function LoginForm() {
             <AuthSocButton onClick={handleGoogleSignIn}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Image src={imgGoogle} alt="Google" width={16} height={16} />
-                <Typography>Sign In with Google</Typography>
+                <Typography>{t('signInWithGoogle')}</Typography>
               </Stack>
             </AuthSocButton>
           </Grid>
@@ -54,7 +56,7 @@ export default function LoginForm() {
             <AuthSocButton>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Image src={imgFacebook} alt="Facebook" width={16} height={16} />
-                <Typography>Sign In with Facebook</Typography>
+                <Typography>{t('signInWithFacebook')}</Typography>
               </Stack>
             </AuthSocButton>
           </Grid>
@@ -62,7 +64,7 @@ export default function LoginForm() {
             <AuthSocButton>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Image src={imgTwitter} alt="Twitter" width={16} height={16} />
-                <Typography>Sign In with Twitter</Typography>
+                <Typography>{t('signInWithTwitter')}</Typography>
               </Stack>
             </AuthSocButton>
           </Grid>

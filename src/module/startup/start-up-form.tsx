@@ -16,11 +16,11 @@ import { apiUrl, getUrlApi } from '@/utils/get-url-api'
 import { useTranslation } from '@/translation'
 import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
-import { APP_LOGIN_PATH } from '@/config'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import AnimateButton from '@/components/@extended/AnimateButton'
 import Button from '@mui/material/Button'
 import { enqueueSnackbar } from 'notistack'
+import { firebaseAuth } from '@/lib/firebase/config'
 
 export const StartUpForm = () => {
   const { t } = useTranslation()
@@ -39,7 +39,7 @@ export const StartUpForm = () => {
       method: 'POST',
     },
     handleSuccess() {
-      enqueueSnackbar('Create first organization successfully!', { variant: 'success' })
+      enqueueSnackbar(t('createFirstOrganizationSuccessfully'), { variant: 'success' })
       router.push('/')
     },
     handleError(status, message) {
@@ -47,6 +47,15 @@ export const StartUpForm = () => {
     },
     nonCallInit: true,
   })
+
+  const handleLogout = async () => {
+    removeCookies(USER_TOKEN)
+    try {
+      await firebaseAuth.signOut()
+    } catch (e) {
+      throw new Error('Google sign in failed', e || '')
+    }
+  }
 
   return (
     <form
@@ -83,10 +92,7 @@ export const StartUpForm = () => {
                 fontWeight: '500',
                 fontSize: '14px',
               }}
-              onClick={() => {
-                removeCookies(USER_TOKEN)
-                router.push(APP_LOGIN_PATH)
-              }}
+              onClick={handleLogout}
             >
               {t('backLogin')}
             </Typography>
@@ -98,7 +104,7 @@ export const StartUpForm = () => {
               htmlFor="startup"
               sx={{ fontWeight: '400', fontSize: '14px', marginBottom: '8px' }}
             >
-              Organization Name
+              {t('organizationName')}
             </InputLabel>
             <OutlinedInput
               fullWidth
@@ -106,7 +112,7 @@ export const StartUpForm = () => {
               id="startup"
               type="text"
               name="startup"
-              placeholder="Enter Organization Name"
+              placeholder={t('enterOrganizationName')}
               inputProps={{}}
               inputRef={orgRef}
             />
@@ -138,7 +144,7 @@ export const StartUpForm = () => {
                 mt: '24px',
               }}
             >
-              Create Organization
+              {t('createOrganizationBtn')}
             </Button>
           </AnimateButton>
         </Grid>

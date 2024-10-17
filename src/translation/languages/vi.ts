@@ -55,111 +55,26 @@ const common = {
   backLogin: ' Quay lại đăng nhập',
   comfirm: 'Xác nhận',
 }
-const signUp = {
-  createAccount: 'Tạo tài khoản',
-  createAccountDes:
-    'Để tạo một tài khoản mới, vui lòng liên hệ với quản trị viên hệ thống của bạn để được hỗ trợ. Họ sẽ cung cấp quyền truy cập và thông tin xác thực cần thiết để giúp bạn bắt đầu.',
-}
-const signIn = {
-  emailOrUsername: 'Email hoặc tên người dùng',
-  inputEmail: 'Nhập email hoặc tên người dùng của bạn',
-  inputEmailOnly: 'Nhập email của bạn',
-  enterOtp: 'Nhập OTP',
-  remember: 'Ghi nhớ đăng nhập',
-  backLogin: 'Quay lại đăng nhập',
-  dontReceiveEmail: 'Không nhận được email? ',
-  clickResend: 'Nhấn để gửi lại',
-  submitOtp: 'Gửi mã OTP',
-  enterTheCode: 'Nhập mã',
-  enterTheCodeDes: 'Nhập mã xác nhận mà chúng tôi đã gửi tới ',
 
-  createNewPassword: 'Tạo mật khẩu mới',
-  passwordStrength: 'Độ mạnh của mật khẩu',
-  passwordCf: 'Xác nhận mật khẩu',
-  passwordCfNotMatch: 'Mật khẩu không khớp với Mật khẩu xác nhận',
-  Poor: 'Kém',
-  Weak: 'Yếu',
-  Normal: 'Bình thường ',
-  Good: 'Tốt',
-  passRequired1: '• Tối thiểu 8 ký tự',
-  passRequired2: '• Ít nhất một ký tự viết hoa',
-  passRequired3: '• Ít nhất một ký tự đặc biệt',
-  passRequired4: '• Ít nhất một ký tự số',
-  emailNotFound: 'Không tìm thấy email',
-  invalidEmail: 'Email không hợp lệ',
-  invalidRequest: 'Error',
+const signInScreen = {
+  welcomeToTheBigpay: 'Chào Mừng Tới Ví Điện Tử BigPay',
+  signInWithYourAccount: 'Đăng nhập bằng tài khoản của bạn.',
+  signInWithGoogle: 'Đăng nhập bằng Google',
+  signInWithFacebook: 'Đăng nhập bằng Facebook',
+  signInWithTwitter: 'Đăng nhập bằng Twitter',
 }
 
-const board = {
-  boardSetting: 'Cài đặt bảng',
-  renameBoard: 'Đổi tên bảng',
-  watchBoarddescription: 'Bạn sẽ được thông báo về bất kỳ thay đổi nào trên bảng này',
-  trackingBoarddescription:
-    'Bạn sẽ được thông báo về bất kỳ thay đổi nào trong các thẻ mà bạn tham gia với tư cách là người tạo hoặc thành viên',
-  muteBoarddescription:
-    'Bạn sẽ không bao giờ nhận được thông báo về bất kỳ thay đổi nào trong bảng này',
-  changeWatch: 'Thay đổi theo dõi',
-  sortBoard: 'Sắp xếp bảng',
-  dueDate: 'Hạn cuối',
-  titleAlphabetically: 'Tiêu đề (Theo thứ tự chữ cái)',
-  createdAtNewest: 'Ngày tạo (Mới nhất trước)',
-  createdAtOldest: 'Ngày tạo (Cũ nhất trước)',
-  newBoard: 'Bảng mới',
-  enterBoardName: 'Nhập tên bảng',
-  labels: 'Nhãn',
-  typeNameOfLabel: 'Nhập tên nhãn',
-  newLabel: 'Nhãn mới',
-  addLabels: 'Thêm nhãn',
-  members: 'Thành viên',
-  addMembers: 'Thêm thành viên',
-  boardName: 'Tên bảng',
-  boardStart: 'Danh sách bảng',
-  boardNameRequired: 'Tên bảng là bắt buộc',
-  addBoard: 'Thêm bảng',
-  lists: 'Danh mục',
-  list: 'Danh sách',
-  create: 'Tạo mới',
-  update: 'Cập nhật',
-  detail: 'Chi tiết',
-  swimlane: 'Dòng công việc',
-  board: 'Bảng',
+const startUpScreen = {
+  createOrganization: 'Tạo Tổ Chức Đầu Tiên',
+  organizationName: 'Tên tổ chức',
+  enterOrganizationName: 'Nhập tên của tổ chức',
+  createOrganizationBtn: 'Tạo tổ chức',
+  createFirstOrganizationSuccessfully: 'Tạo tổ chức đầu tiên thành công!',
 }
 
-const swimlane = {
-  newSwimlane: 'Dòng công việc mới',
-  enterSwimlaneName: 'Nhập tên dòng công việc',
-  renameSwimlane: 'Đổi tên dòng công việc',
-}
-
-const list = {
-  newList: 'Danh sách mới',
-  enterListName: 'Nhập tên danh sách',
-}
-
-const admin = {
-  admin: 'Quản trị viên',
-  newUser: 'Người dùng mới',
-  fullName: 'Họ và tên',
-  username: 'Tên người dùng',
-  editUser: 'Chỉnh sửa người dùng',
-  editInfo: 'Chỉnh sửa thông tin',
-  assignAsAdmin: 'Chỉ định làm quản trị viên',
-  revokeFromAdmin: 'Thu hồi quyền quản trị viên',
-  deactivate: 'Vô hiệu hóa',
-  activate: 'Kích hoạt',
-  delete: 'Xóa',
-  owner: 'Chủ sở hữu',
-}
 const notification = {
   noUnreadNotification: 'Chưa có thông báo chưa đọc!',
   noNotificationsMessage: 'Bạn hiện không có thông báo nào. Hãy quay lại sau.',
-}
-const setting = {
-  allBoards: 'Tất cả bảng',
-  archive: 'Lưu trữ',
-  filesManager: 'Quản lý tệp',
-  adminPanel: 'Bảng điều khiển quản trị',
-  profileSetting: 'Cài đặt hồ sơ',
 }
 
 const error = {
@@ -182,52 +97,10 @@ const error = {
   wrongLoginOtp: 'Sai mã OTP',
 }
 
-const role = {
-  access: 'Truy cập',
-  roleName: 'Tên vai trò',
-  newRole: 'Thêm vai trò mới',
-  roleNamePlaceHolder: 'Đặt tên duy nhất cho vai trò của bạn',
-  roleDescriptionPlaceHolder:
-    'Mô tả ngắn gọn ý nghĩa của vai trò này và những gì người có vai trò này có thể làm',
-  editRole: 'Chỉnh sửa vai trò',
-  searchRole: 'Tìm kiếm vai trò',
-  createRole: 'Tạo vai trò',
-  addUser: 'Thêm người dùng',
-  removeRole: 'Xóa vai trò',
-  deleteRole: 'Xóa vai trò',
-
-  deleteRoleMess: 'Bạn có chắc chắn muốn xóa vai trò này không? Hành động này không thể hoàn tác.',
-  deleteRoleTitle: 'Xóa vai trò?',
-  updateRole: 'Cập nhật vai trò',
-  setDefault: 'Đặt làm mặc định',
-  totalUsers: 'Tổng số người dùng',
-}
-const user = {
-  confirmPassword: 'Xác nhận mật khẩu',
-  oldPassword: 'Mật khẩu cũ',
-  newPassword: 'Mật khẩu mới',
-  typeConfirmPassword: 'Nhập lại mật khẩu xác nhận',
-  typeOldPassword: 'Nhập mật khẩu cũ',
-  typeNewPassword: 'Nhập mật khẩu mới',
-  oldPasswordRequired: 'Mật khẩu cũ là bắt buộc',
-  newPasswordRequired: 'Mật khẩu mới là bắt buộc',
-  cfPasswordRequired: 'Xác nhận mật khẩu là bắt buộc',
-  newPasswordMatch: 'Mật khẩu mới không được giống mật khẩu cũ',
-  cfPasswordNotMatch: 'Mật khẩu mới và xác nhận mật khẩu phải khớp',
-  fullNameRequired: 'Họ và tên là bắt buộc',
-  emailRequired: 'Email là bắt buộc',
-}
 export const vi = {
   ...common,
-  ...signIn,
-  ...board,
-  ...swimlane,
-  ...list,
-  ...admin,
   ...notification,
-  ...setting,
   ...error,
-  ...role,
-  ...user,
-  ...signUp,
+  ...signInScreen,
+  ...startUpScreen,
 }
