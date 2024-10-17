@@ -1,13 +1,15 @@
+'use client'
+
 // material-ui
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 
 // project-imports
-import AuthSlider from './AuthSlider'
+import AuthSlider from './auth-slider'
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
-export default function AuthWrapper({ children }: { children: any }) {
+export const AuthLayout = ({ children }: { children: any }) => {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <Grid
@@ -55,6 +57,32 @@ export default function AuthWrapper({ children }: { children: any }) {
                 bgcolor: 'primary.main',
               }}
             >
+              <Box
+                component="img"
+                src="./auth/ellipse-3.svg"
+                alt="ellipse 3"
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: 'auto',
+                  height: 'auto',
+                }}
+              />
+
+              <Box
+                component="img"
+                src="./auth/ellipse-4.svg"
+                alt="ellipse 4"
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  width: 'auto',
+                  height: 'auto',
+                }}
+              />
+
               <AuthSlider />
             </Grid>
           </Grid>

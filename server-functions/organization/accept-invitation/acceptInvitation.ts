@@ -47,6 +47,7 @@ export const acceptInvitation = async ({
   }
   // Return if invitation is expired
   if (new Date() < foundOrgPending.expiredDate) {
+    await prisma.pendingOrgMember.delete({ where: { invitationToken } })
     return {
       status: 400,
       message: 'invitationExpired',

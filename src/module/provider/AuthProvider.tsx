@@ -7,7 +7,7 @@ import { GetUserAndRoleRes } from '../../../server-functions/user/get-user-and-r
 import { apiUrl, getUrlApi } from '@/utils/get-url-api'
 import { useInfoUser } from '@/atom/useInfoUser'
 import { redirect, usePathname } from 'next/navigation'
-import { APP_ADMIN_PATH, APP_CLIENT_PATH, APP_LOGIN_PATH } from '@/config'
+import { APP_ADMIN_PATH, APP_CLIENT_PATH, APP_LOGIN_PATH, APP_STARTUP_PATH } from '@/config'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // Get token from cookies
@@ -41,8 +41,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     redirect(APP_LOGIN_PATH)
   }
 
-  if (mounted && !userInfo?.isAdmin && cookies.token && !pathName.includes(APP_CLIENT_PATH)) {
-    redirect(APP_CLIENT_PATH)
+  if (mounted && !userInfo?.isAdmin && cookies.token) {
+    // Always redirect user to start-up page if they don't have any org
+    if (!pathName.includes(APP_STARTUP_PATH) && userInfo && userInfo.orgMember.length === 0) {
+      redirect(APP_STARTUP_PATH)
+    }
+    if (!pathName.includes(APP_CLIENT_PATH) && userInfo && userInfo.orgMember.length > 0) {
+      redirect(APP_CLIENT_PATH)
+    }
   }
 
   if (mounted && userInfo?.isAdmin && cookies.token && !pathName.includes(APP_ADMIN_PATH)) {

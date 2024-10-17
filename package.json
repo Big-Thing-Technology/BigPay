@@ -57,7 +57,8 @@
     "jotai": "2.7.2",
     "simplebar-react": "^3.2.6",
     "react-device-detect": "^2.2.3",
-    "react-intl": "^6.6.5"
+    "react-intl": "^6.6.5",
+    "notistack": "^3.0.1"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.2.0",
