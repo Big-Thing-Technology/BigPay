@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie'
 import { USER_TOKEN } from '@/utils/cookies-key'
 import AuthSocButton from '@/module/auth/auth-soc-button'
 import { useTranslation } from '@/translation'
+import { enqueueSnackbar } from 'notistack'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
@@ -25,8 +26,12 @@ export default function LoginForm() {
       const userGoogleToken = await result.user.getIdToken(true)
 
       setCookies(USER_TOKEN, userGoogleToken)
-    } catch (e) {
-      throw new Error('Google sign in failed', e || '')
+      enqueueSnackbar(t('loginSuccessfully'), { variant: 'success' })
+    } catch (e: any) {
+      if (e.message === 'Firebase: Error (auth/popup-closed-by-user).') {
+        // reload page
+      }
+      enqueueSnackbar(t('errorLoginPleaseReload'), { variant: 'error' })
     }
   }
 
