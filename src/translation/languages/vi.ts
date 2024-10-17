@@ -1,0 +1,233 @@
+const common = {
+  login: 'Đăng nhập',
+  manage: 'Quản Lý',
+  signIn: 'Đăng nhập',
+  password: 'Mật khẩu',
+  enterPassword: 'Nhập mật khẩu của bạn',
+  forgotPassword: 'Quên mật khẩu',
+  menu: 'Menu',
+  rename: 'Đổi tên',
+  typedescription: 'Nhập mô tả',
+  title: 'Tiêu đề',
+  description: 'Mô tả',
+  submit: 'Gửi',
+  star: 'Đánh dấu',
+  watch: 'Xem',
+  tracking: 'Theo dõi',
+  mute: 'Tắt tiếng',
+  close: 'Đóng',
+  add: 'Thêm',
+  name: 'Tên',
+  test: 'Kiểm tra',
+  developing: 'Phát triển',
+  email: 'Email',
+  action: 'Hành động',
+  active: 'Kích hoạt',
+  inactive: 'Không kích hoạt',
+  available: 'Có sẵn',
+  deleted: 'Đã xóa',
+  logout: 'Đăng xuất',
+  username: 'Tên người dùng',
+  notifications: 'Thông báo',
+  viewAll: 'Xem tất cả',
+  selectLanguage: 'Chọn ngôn ngữ',
+  home: 'Trang chủ',
+  users: 'Người dùng',
+  roleAPermisstion: 'Vai trò và Quyền hạn',
+  role: 'Vai trò',
+  detail: 'Chi tiết',
+  accountsetting: 'Cài đặt tài khoản',
+  create: 'Tạo mới',
+  update: 'Cập nhật',
+  list: 'Danh sách',
+  language: 'Ngôn ngữ',
+  profile: 'Hồ sơ',
+  typeFullName: 'Nhập tên đầy đủ',
+  userName: 'Tên tài khoản',
+  haveAccount: 'Chưa có tài khoản?',
+  emailPH: 'Nhập tên người dùng hoặc địa chỉ email',
+  passwordPH: 'Nhập mật khẩu',
+  textPrivacy:
+    'Bằng cách đăng nhập, bạn xác nhận đã đọc{replace}của BigPay.vn và đồng ý với{replace}.',
+  privacyPolicy: 'Chính sách quyền riêng tư',
+  termService: 'Điều khoản dịch vụ',
+  resetPassword: 'Đặt lại mật khẩu',
+  backLogin: ' Quay lại đăng nhập',
+  comfirm: 'Xác nhận',
+}
+const signUp = {
+  createAccount: 'Tạo tài khoản',
+  createAccountDes:
+    'Để tạo một tài khoản mới, vui lòng liên hệ với quản trị viên hệ thống của bạn để được hỗ trợ. Họ sẽ cung cấp quyền truy cập và thông tin xác thực cần thiết để giúp bạn bắt đầu.',
+}
+const signIn = {
+  emailOrUsername: 'Email hoặc tên người dùng',
+  inputEmail: 'Nhập email hoặc tên người dùng của bạn',
+  inputEmailOnly: 'Nhập email của bạn',
+  enterOtp: 'Nhập OTP',
+  remember: 'Ghi nhớ đăng nhập',
+  backLogin: 'Quay lại đăng nhập',
+  dontReceiveEmail: 'Không nhận được email? ',
+  clickResend: 'Nhấn để gửi lại',
+  submitOtp: 'Gửi mã OTP',
+  enterTheCode: 'Nhập mã',
+  enterTheCodeDes: 'Nhập mã xác nhận mà chúng tôi đã gửi tới ',
+
+  createNewPassword: 'Tạo mật khẩu mới',
+  passwordStrength: 'Độ mạnh của mật khẩu',
+  passwordCf: 'Xác nhận mật khẩu',
+  passwordCfNotMatch: 'Mật khẩu không khớp với Mật khẩu xác nhận',
+  Poor: 'Kém',
+  Weak: 'Yếu',
+  Normal: 'Bình thường ',
+  Good: 'Tốt',
+  passRequired1: '• Tối thiểu 8 ký tự',
+  passRequired2: '• Ít nhất một ký tự viết hoa',
+  passRequired3: '• Ít nhất một ký tự đặc biệt',
+  passRequired4: '• Ít nhất một ký tự số',
+  emailNotFound: 'Không tìm thấy email',
+  invalidEmail: 'Email không hợp lệ',
+  invalidRequest: 'Error',
+}
+
+const board = {
+  boardSetting: 'Cài đặt bảng',
+  renameBoard: 'Đổi tên bảng',
+  watchBoarddescription: 'Bạn sẽ được thông báo về bất kỳ thay đổi nào trên bảng này',
+  trackingBoarddescription:
+    'Bạn sẽ được thông báo về bất kỳ thay đổi nào trong các thẻ mà bạn tham gia với tư cách là người tạo hoặc thành viên',
+  muteBoarddescription:
+    'Bạn sẽ không bao giờ nhận được thông báo về bất kỳ thay đổi nào trong bảng này',
+  changeWatch: 'Thay đổi theo dõi',
+  sortBoard: 'Sắp xếp bảng',
+  dueDate: 'Hạn cuối',
+  titleAlphabetically: 'Tiêu đề (Theo thứ tự chữ cái)',
+  createdAtNewest: 'Ngày tạo (Mới nhất trước)',
+  createdAtOldest: 'Ngày tạo (Cũ nhất trước)',
+  newBoard: 'Bảng mới',
+  enterBoardName: 'Nhập tên bảng',
+  labels: 'Nhãn',
+  typeNameOfLabel: 'Nhập tên nhãn',
+  newLabel: 'Nhãn mới',
+  addLabels: 'Thêm nhãn',
+  members: 'Thành viên',
+  addMembers: 'Thêm thành viên',
+  boardName: 'Tên bảng',
+  boardStart: 'Danh sách bảng',
+  boardNameRequired: 'Tên bảng là bắt buộc',
+  addBoard: 'Thêm bảng',
+  lists: 'Danh mục',
+  list: 'Danh sách',
+  create: 'Tạo mới',
+  update: 'Cập nhật',
+  detail: 'Chi tiết',
+  swimlane: 'Dòng công việc',
+  board: 'Bảng',
+}
+
+const swimlane = {
+  newSwimlane: 'Dòng công việc mới',
+  enterSwimlaneName: 'Nhập tên dòng công việc',
+  renameSwimlane: 'Đổi tên dòng công việc',
+}
+
+const list = {
+  newList: 'Danh sách mới',
+  enterListName: 'Nhập tên danh sách',
+}
+
+const admin = {
+  admin: 'Quản trị viên',
+  newUser: 'Người dùng mới',
+  fullName: 'Họ và tên',
+  username: 'Tên người dùng',
+  editUser: 'Chỉnh sửa người dùng',
+  editInfo: 'Chỉnh sửa thông tin',
+  assignAsAdmin: 'Chỉ định làm quản trị viên',
+  revokeFromAdmin: 'Thu hồi quyền quản trị viên',
+  deactivate: 'Vô hiệu hóa',
+  activate: 'Kích hoạt',
+  delete: 'Xóa',
+  owner: 'Chủ sở hữu',
+}
+const notification = {
+  noUnreadNotification: 'Chưa có thông báo chưa đọc!',
+  noNotificationsMessage: 'Bạn hiện không có thông báo nào. Hãy quay lại sau.',
+}
+const setting = {
+  allBoards: 'Tất cả bảng',
+  archive: 'Lưu trữ',
+  filesManager: 'Quản lý tệp',
+  adminPanel: 'Bảng điều khiển quản trị',
+  profileSetting: 'Cài đặt hồ sơ',
+}
+
+const error = {
+  backToHome: 'Quay Về Trang Chủ',
+
+  // 403 Screen
+  title_403: 'Cấm Truy Cập',
+  desc_403: 'Bạn không có quyền truy cập',
+
+  // 404 Screen
+  title_404: 'Không Tồn Tại',
+  desc_404: 'Trang truy cập không tồn tại',
+
+  // login error:
+  deactivatedUser: 'Tài khoản bị vô hiệu hóa',
+  deletedUser: 'Tài khoản đã bị xóa',
+  notFoundUsername: 'Tài khoản không tồn tại',
+  passwordNotMatch: 'Sai mật khẩu',
+  eSignInTitle: 'Không Thể Đăng Nhập',
+  wrongLoginOtp: 'Sai mã OTP',
+}
+
+const role = {
+  access: 'Truy cập',
+  roleName: 'Tên vai trò',
+  newRole: 'Thêm vai trò mới',
+  roleNamePlaceHolder: 'Đặt tên duy nhất cho vai trò của bạn',
+  roleDescriptionPlaceHolder:
+    'Mô tả ngắn gọn ý nghĩa của vai trò này và những gì người có vai trò này có thể làm',
+  editRole: 'Chỉnh sửa vai trò',
+  searchRole: 'Tìm kiếm vai trò',
+  createRole: 'Tạo vai trò',
+  addUser: 'Thêm người dùng',
+  removeRole: 'Xóa vai trò',
+  deleteRole: 'Xóa vai trò',
+
+  deleteRoleMess: 'Bạn có chắc chắn muốn xóa vai trò này không? Hành động này không thể hoàn tác.',
+  deleteRoleTitle: 'Xóa vai trò?',
+  updateRole: 'Cập nhật vai trò',
+  setDefault: 'Đặt làm mặc định',
+  totalUsers: 'Tổng số người dùng',
+}
+const user = {
+  confirmPassword: 'Xác nhận mật khẩu',
+  oldPassword: 'Mật khẩu cũ',
+  newPassword: 'Mật khẩu mới',
+  typeConfirmPassword: 'Nhập lại mật khẩu xác nhận',
+  typeOldPassword: 'Nhập mật khẩu cũ',
+  typeNewPassword: 'Nhập mật khẩu mới',
+  oldPasswordRequired: 'Mật khẩu cũ là bắt buộc',
+  newPasswordRequired: 'Mật khẩu mới là bắt buộc',
+  cfPasswordRequired: 'Xác nhận mật khẩu là bắt buộc',
+  newPasswordMatch: 'Mật khẩu mới không được giống mật khẩu cũ',
+  cfPasswordNotMatch: 'Mật khẩu mới và xác nhận mật khẩu phải khớp',
+  fullNameRequired: 'Họ và tên là bắt buộc',
+  emailRequired: 'Email là bắt buộc',
+}
+export const vi = {
+  ...common,
+  ...signIn,
+  ...board,
+  ...swimlane,
+  ...list,
+  ...admin,
+  ...notification,
+  ...setting,
+  ...error,
+  ...role,
+  ...user,
+  ...signUp,
+}

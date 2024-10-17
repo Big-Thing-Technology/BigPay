@@ -5,8 +5,17 @@ export const getUrlApi = (path: string): string => {
 
 export const apiUrl = {
   user: {
-    get_info_role: '/users/get-info',
+    get_info_role: 'users/get-info',
   },
   admin: {},
   client: {},
+  organization: {
+    create: 'organizations/create-organization',
+    get: 'organizations/get-organization',
+    updateInfo: 'organizations/update-organization',
+    updateStatus: 'organizations/update-status',
+    invite: 'organizations/invite-user',
+    accept: 'organizations/accept-invitation',
+    getById: (id: string) => `organizations/${id}`,
+  },
 }

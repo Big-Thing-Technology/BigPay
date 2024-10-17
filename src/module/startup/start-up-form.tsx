@@ -2,12 +2,8 @@
 
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
-import LogoSection from '@/components/logo'
-import { APP_LANDING_PATH } from '@/config'
-import AuthCard from '@/module/auth/AuthCard'
 import Typography from '@mui/material/Typography'
 import { Backdrop, CircularProgress, FormHelperText, InputLabel } from '@mui/material'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import { useRef, useState } from 'react'
 import { useCallApi } from '@/hooks/useCallApi'
 import {
@@ -15,28 +11,36 @@ import {
   CreateOrganizationReq,
   CreateOrganizationRes,
 } from '../../../server-functions/organization/create-organization'
-import { apiRoutes } from '@/constant/api-routes'
-import Button from '@mui/material/Button'
-import AnimateButton from '@/components/@extended/AnimateButton'
 import { useRouter } from 'next/navigation'
+import { apiUrl, getUrlApi } from '@/utils/get-url-api'
+import { useTranslation } from '@/translation'
+import { useCookies } from 'react-cookie'
+import { USER_TOKEN } from '@/utils/cookies-key'
+import { APP_LOGIN_PATH } from '@/config'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import AnimateButton from '@/components/@extended/AnimateButton'
+import Button from '@mui/material/Button'
+import { enqueueSnackbar } from 'notistack'
 
 export const StartUpForm = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const orgRef = useRef<HTMLInputElement | null>(null)
   const [errorMess, setErrorMess] = useState('')
+  const [, , removeCookies] = useCookies([USER_TOKEN])
 
   const { promiseFunc: newOrg, loading } = useCallApi<
     CreateOrganizationRes,
     CreateOrganizationError,
     CreateOrganizationReq
   >({
-    url: apiRoutes.organization.create,
+    url: getUrlApi(apiUrl.organization.create),
     options: {
       method: 'POST',
     },
     handleSuccess() {
+      enqueueSnackbar('Create first organization successfully!', { variant: 'success' })
       router.push('/')
-      // enqueueSnackbar('Sent forgot password email!', { variant: 'success' })
     },
     handleError(status, message) {
       setErrorMess(message)
@@ -59,76 +63,84 @@ export const StartUpForm = () => {
       </Backdrop>
       <Grid container>
         <Grid item xs={12}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <LogoSection to={APP_LANDING_PATH} />
+          <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: '600',
+                fontSize: '20px',
+                marginBottom: '24px',
+              }}
+            >
+              {t('createOrganization')}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                textDecoration: 'none',
+                cursor: 'pointer',
+                color: 'primary.main',
+                fontWeight: '500',
+                fontSize: '14px',
+              }}
+              onClick={() => {
+                removeCookies(USER_TOKEN)
+                router.push(APP_LOGIN_PATH)
+              }}
+            >
+              {t('backLogin')}
+            </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} sx={{ '& > div': { margin: '24px auto' } }}>
-          <AuthCard border>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4">Create Your First Organization</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Stack spacing={1}>
-                      <InputLabel
-                        htmlFor="startup"
-                        sx={{
-                          fontWeight: '400',
-                          fontSize: '14px',
-                          marginBottom: '8px',
-                        }}
-                      >
-                        Organization Name
-                      </InputLabel>
-                      <OutlinedInput
-                        fullWidth
-                        error={errorMess.length > 0}
-                        id="startup"
-                        type="text"
-                        name="startup"
-                        placeholder="Enter Organization Name"
-                        inputProps={{}}
-                        inputRef={orgRef}
-                      />
-                    </Stack>
-                    <FormHelperText
-                      error
-                      id="helper-text-create-org"
-                      sx={{
-                        visibility: errorMess.length > 0 ? 'visible' : 'hidden',
-                        fontWeight: '400',
-                        fontSize: '10px',
-                      }}
-                    >
-                      {errorMess}
-                    </FormHelperText>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <AnimateButton>
-                      <Button
-                        disableElevation
-                        fullWidth
-                        size="large"
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          fontWeight: '500',
-                          fontSize: '16px',
-                          mt: '24px',
-                        }}
-                      >
-                        Create
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </AuthCard>
+        <Grid item xs={12}>
+          <Stack spacing={1}>
+            <InputLabel
+              htmlFor="startup"
+              sx={{ fontWeight: '400', fontSize: '14px', marginBottom: '8px' }}
+            >
+              Organization Name
+            </InputLabel>
+            <OutlinedInput
+              fullWidth
+              error={errorMess.length > 0}
+              id="startup"
+              type="text"
+              name="startup"
+              placeholder="Enter Organization Name"
+              inputProps={{}}
+              inputRef={orgRef}
+            />
+          </Stack>
+          <FormHelperText
+            error
+            id="helper-text-create-org"
+            sx={{
+              visibility: errorMess.length > 0 ? 'visible' : 'hidden',
+              fontWeight: '400',
+              fontSize: '10px',
+            }}
+          >
+            {t(errorMess)}
+          </FormHelperText>
+        </Grid>
+        <Grid item xs={12}>
+          <AnimateButton>
+            <Button
+              disableElevation
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{
+                fontWeight: '500',
+                fontSize: '16px',
+                mt: '24px',
+              }}
+            >
+              Create Organization
+            </Button>
+          </AnimateButton>
         </Grid>
       </Grid>
     </form>
