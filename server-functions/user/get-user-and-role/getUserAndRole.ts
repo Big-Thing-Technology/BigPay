@@ -32,6 +32,9 @@ export const getUserAndRole = async ({
         avatar: decodedUser.picture,
         lastLoginDate: new Date(),
       },
+      include: {
+        orgMember: true,
+      },
     })
 
     return {
