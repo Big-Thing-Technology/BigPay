@@ -9,6 +9,8 @@ import { USER_TOKEN } from '@/utils/cookies-key'
 import AuthSocButton from '@/module/auth/auth-soc-button'
 import { useTranslation } from '@/translation'
 import { enqueueSnackbar } from 'notistack'
+import { useRouter } from 'next/navigation'
+import { APP_LOGIN_PATH } from '@/config'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
@@ -16,6 +18,7 @@ const imgGoogle = 'logo/google.svg'
 
 export default function LoginForm() {
   const { t } = useTranslation()
+  const router = useRouter()
   const [, setCookies] = useCookies([USER_TOKEN])
 
   const handleGoogleSignIn = async () => {
@@ -29,7 +32,7 @@ export default function LoginForm() {
       enqueueSnackbar(t('loginSuccessfully'), { variant: 'success' })
     } catch (e: any) {
       if (e.message === 'Firebase: Error (auth/popup-closed-by-user).') {
-        // reload page
+        router.push(APP_LOGIN_PATH)
       }
       enqueueSnackbar(t('errorLoginPleaseReload'), { variant: 'error' })
     }

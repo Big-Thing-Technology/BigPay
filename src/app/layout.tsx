@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link rel="icon" href="logo/3.svg" sizes="any" />
+      <link rel="icon" href="/logo/3.svg" sizes="any" />
       <body>
         <Providers>{children}</Providers>
       </body>
