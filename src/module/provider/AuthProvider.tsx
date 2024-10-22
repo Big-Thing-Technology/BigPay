@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       redirect(APP_STARTUP_PATH)
     }
     if (!pathName.includes(APP_CLIENT_PATH) && userInfo && userInfo.orgMember.length > 0) {
-      redirect(APP_CLIENT_PATH)
+      redirect(`${APP_CLIENT_PATH}?orgId=start`)
     }
   }
 
