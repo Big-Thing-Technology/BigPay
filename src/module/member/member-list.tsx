@@ -13,6 +13,7 @@ import IconButton from '@/components/@extended/IconButton'
 import { ThemeMode } from '@/config'
 import ReactTable from '@/components/table/react-table'
 import Loader from '@/components/Loader'
+import AddMemberModal from '@/module/member/add-member-modal'
 
 const listMember = [
   {
@@ -150,10 +151,8 @@ export default function MemberList() {
   const [loading] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
 
-  // const [memberModal, setMemberModal] = useState<boolean>(false)
-  // const [selectedMember, setSelectedMember] = useState<any | null>(null)
-  // const [memberDeleteId, setMemberDeleteId] = useState<any>('')
-  const [, setMemberModal] = useState<boolean>(false)
+  const [addMemberModal, setAddMemberModal] = useState<boolean>(false)
+  const [, setEditMemberModal] = useState<boolean>(false)
   const [, setSelectedMember] = useState<any | null>(null)
   const [, setMemberDeleteId] = useState<any>('')
 
@@ -161,7 +160,6 @@ export default function MemberList() {
     setOpen(!open)
   }
 
-  // Name, Email, Address, Mobile, Joining Date, Action
   const columns = useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -241,7 +239,7 @@ export default function MemberList() {
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation()
                     setSelectedMember(row.original)
-                    setMemberModal(true)
+                    setEditMemberModal(true)
                   }}
                 >
                   <Edit />
@@ -282,8 +280,8 @@ export default function MemberList() {
         {...{
           data: listMember,
           columns,
-          modalToggler: () => {
-            setMemberModal(true)
+          modalToggle: () => {
+            setAddMemberModal(true)
             setSelectedMember(null)
           },
         }}
@@ -295,7 +293,7 @@ export default function MemberList() {
       {/*  open={open} */}
       {/*  handleClose={handleClose} */}
       {/* /> */}
-      {/* <MemberModal open={memberModal} modalToggler={setMemberModal} member={selectedMember} /> */}
+      <AddMemberModal open={addMemberModal} modalToggler={setAddMemberModal} />
     </>
   )
 }

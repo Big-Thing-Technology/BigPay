@@ -33,12 +33,12 @@ import MemberView from '@/module/member/member-view'
 interface Props {
   columns: ColumnDef<any>[]
   data: any[]
-  modalToggler: () => void
+  modalToggle: () => void
 }
 
 // ==============================|| REACT TABLE - LIST ||============================== //
 
-export default function ReactTable({ data, columns, modalToggler }: Props) {
+export default function ReactTable({ data, columns, modalToggle }: Props) {
   const theme = useTheme()
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -117,7 +117,7 @@ export default function ReactTable({ data, columns, modalToggler }: Props) {
           {/*  }} */}
           {/* /> */}
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Button variant="contained" startIcon={<Add />} onClick={modalToggler} size="large">
+            <Button variant="contained" startIcon={<Add />} onClick={modalToggle} size="large">
               Add Member
             </Button>
           </Stack>

@@ -34,6 +34,8 @@ model OrgMember {
   userId         String       @db.ObjectId
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String       @db.ObjectId
+  // joiningDate
+  // statuses
 }
 
 model Organization {
@@ -52,6 +54,7 @@ model Organization {
 
 model PendingOrgMember {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  avatar          String?
   email           String
   invitationToken String       @unique
   expiredDate     DateTime
