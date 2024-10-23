@@ -67,5 +67,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'off',
     'import/no-cycle': 'off',
     'import/no-relative-packages': 'off',
+    'react/no-unstable-nested-components': 'off',
   },
 }
