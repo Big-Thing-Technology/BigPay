@@ -1,5 +1,5 @@
-'use client'
+import MemberList from '@/module/member/member-list'
 
 export default function MemberPage() {
-  return <>This is member page</>
+  return <MemberList />
 }
