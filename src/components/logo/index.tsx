@@ -11,7 +11,6 @@ import { To } from 'history'
 // project-imports
 import Logo from './LogoMain'
 import LogoIcon from './LogoIcon'
-import { APP_CLIENT_PATH } from '@/config'
 import { useSearchParams } from 'next/navigation'
 
 // ==============================|| MAIN LOGO ||============================== //
@@ -28,7 +27,7 @@ export default function LogoSection({ isIcon, sx, to }: Props) {
     <ButtonBase
       disableRipple
       component={Link}
-      href={!to ? `${APP_CLIENT_PATH}?orgId=${searchParams.get('orgId')}` : to}
+      href={!to ? `/?orgId=${searchParams.get('orgId')}` : to}
       sx={sx}
     >
       {isIcon ? <LogoIcon /> : <Logo />}
