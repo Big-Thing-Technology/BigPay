@@ -4,7 +4,7 @@ import { CSSProperties, ReactElement, useEffect, useState } from 'react'
 
 // next
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 // material-ui
 import { useTheme } from '@mui/material/styles'
@@ -71,6 +71,7 @@ export default function Breadcrumbs({
 }: Props) {
   const theme = useTheme()
   const location = usePathname()
+  const query = useSearchParams()
   const [main, setMain] = useState<NavItemType | undefined>()
   const [item, setItem] = useState<NavItemType>()
 
@@ -166,7 +167,7 @@ export default function Breadcrumbs({
               maxItems={maxItems || 8}
               separator={separatorIcon}
             >
-              <Link href="/" passHref legacyBehavior>
+              <Link href={`/?orgId=${query.get('orgId')}`} passHref legacyBehavior>
                 <Typography
                   variant="body1"
                   color="text.primary"
@@ -216,7 +217,7 @@ export default function Breadcrumbs({
 
     let tempContent = (
       <MuiBreadcrumbs aria-label="breadcrumb" maxItems={maxItems || 8} separator={separatorIcon}>
-        <Link href="/" passHref legacyBehavior>
+        <Link href={`/?orgId=${query.get('orgId')}`} passHref legacyBehavior>
           <Typography
             color="text.secondary"
             variant="h6"

@@ -1,7 +1,3 @@
-// material-ui
-
-import { useRouter } from 'next/navigation'
-
 /**
  * if you want to use image instead of <svg> uncomment following.
  *
@@ -13,8 +9,6 @@ import { useRouter } from 'next/navigation'
 // ==============================|| LOGO SVG ||============================== //
 
 export default function LogoMain() {
-  const router = useRouter()
-
   return (
     <div
       style={{
@@ -26,11 +20,9 @@ export default function LogoMain() {
         overflow: 'hidden',
       }}
     >
-      {/* <Image src="logo/4.svg" alt="icon logo" width="200" height="200" /> */}
       <picture>
         <source media="(prefers-color-scheme: dark)" srcSet="/logo/8-resized.svg" />
         <img
-          onClick={() => router.push('/')}
           src="/logo/4-resized.svg"
           alt="logo"
           style={{ cursor: 'pointer', width: '100%', height: '100%', objectFit: 'contain' }}

@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import { Add } from 'iconsax-react'
 import Box from '@mui/material/Box'
 import MainCard from '@/components/MainCard'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Divider from '@mui/material/Divider'
 
 interface OrganizationProps {
@@ -88,12 +88,15 @@ type OrganizationModalType = {
 }
 
 export default function OrganizationModal({ isOpen, setOpen }: OrganizationModalType) {
+  const router = useRouter()
+  const pathname = usePathname()
+
   const closeModal = () => {
     setOpen(false)
   }
-  const router = useRouter()
+
   const handlerSwitchOrganization = (orgId: string) => {
-    router.push(`/client/${orgId}`)
+    router.push(`${pathname}?orgId=${orgId}`)
     setOpen(false)
   }
   return (

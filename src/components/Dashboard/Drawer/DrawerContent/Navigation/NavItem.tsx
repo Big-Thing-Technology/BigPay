@@ -1,6 +1,6 @@
 // next
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 // material-ui
 import { useTheme } from '@mui/material/styles'
@@ -45,6 +45,7 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
   // if (item.target) {
   //   itemTarget = '_blank'
   // }
+  const searchParams = useSearchParams()
 
   const isSelected = openItem === item.id
 
@@ -90,7 +91,7 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
     <Box sx={{ position: 'relative' }}>
       <ListItemButton
         component={Link}
-        href={item.url!}
+        href={`${item.url!}?orgId=${searchParams.get('orgId')}`}
         // target={itemTarget}
         disabled={item.disabled}
         selected={isSelected}
