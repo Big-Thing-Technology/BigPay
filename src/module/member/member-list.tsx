@@ -21,6 +21,7 @@ const listMember = [
     email: 'toakira123@gmail.com',
     phoneNumber: '0705045677',
     joiningDate: 'test',
+    isOwner: true,
     avatar:
       'https://lh3.googleusercontent.com/a/ACg8ocJn5K8n3BXLvJnQvvRn6O5GlzG2ecRj3TVZ4HgQjU4f129a2jk=s96-c',
   },

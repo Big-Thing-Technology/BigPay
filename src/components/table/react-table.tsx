@@ -14,12 +14,11 @@ import { Fragment, useMemo, useState } from 'react'
 import { flexRender, useReactTable } from '@tanstack/react-table'
 import MainCard from '@/components/MainCard'
 import Stack from '@mui/material/Stack'
-import { MenuItem, Select, Table, TableBody, TableContainer, TableHead } from '@mui/material'
+import { Table, TableBody, TableContainer, TableHead } from '@mui/material'
 import {
   DebouncedInput,
   HeaderSort,
   RowSelection,
-  SelectColumnSorting,
   TablePagination,
 } from '@/components/third-party/react-table'
 import Button from '@mui/material/Button'
@@ -29,6 +28,7 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import MemberView from '@/module/member/member-view'
 
 interface Props {
   columns: ColumnDef<any>[]
@@ -46,8 +46,8 @@ export default function ReactTable({ data, columns, modalToggler }: Props) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState('')
-  const sortBy = { id: 'id', desc: false }
-  const [statusFilter, setStatusFilter] = useState<string | number>('')
+  // const sortBy = { id: 'id', desc: false }
+  const [statusFilter] = useState<string | number>('')
 
   const filteredData = useMemo(() => {
     if (statusFilter === '') return data
@@ -97,25 +97,25 @@ export default function ReactTable({ data, columns, modalToggler }: Props) {
         />
 
         <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
-          <Select
-            value={statusFilter}
-            onChange={(event) => setStatusFilter(event.target.value)}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Status Filter' }}
-          >
-            <MenuItem value="">All Status</MenuItem>
-            <MenuItem value={1}>Verified</MenuItem>
-            <MenuItem value={2}>Pending</MenuItem>
-            <MenuItem value={3}>Rejected</MenuItem>
-          </Select>
-          <SelectColumnSorting
-            sortBy={sortBy.id}
-            {...{
-              getState: table.getState,
-              getAllColumns: table.getAllColumns,
-              setSorting,
-            }}
-          />
+          {/* <Select */}
+          {/*  value={statusFilter} */}
+          {/*  onChange={(event) => setStatusFilter(event.target.value)} */}
+          {/*  displayEmpty */}
+          {/*  inputProps={{ 'aria-label': 'Status Filter' }} */}
+          {/* > */}
+          {/*  <MenuItem value="">All Status</MenuItem> */}
+          {/*  <MenuItem value={1}>Verified</MenuItem> */}
+          {/*  <MenuItem value={2}>Pending</MenuItem> */}
+          {/*  <MenuItem value={3}>Rejected</MenuItem> */}
+          {/* </Select> */}
+          {/* <SelectColumnSorting */}
+          {/*  sortBy={sortBy.id} */}
+          {/*  {...{ */}
+          {/*    getState: table.getState, */}
+          {/*    getAllColumns: table.getAllColumns, */}
+          {/*    setSorting, */}
+          {/*  }} */}
+          {/* /> */}
           <Stack direction="row" alignItems="center" spacing={2}>
             <Button variant="contained" startIcon={<Add />} onClick={modalToggler} size="large">
               Add Member
@@ -189,8 +189,7 @@ export default function ReactTable({ data, columns, modalToggler }: Props) {
                           colSpan={row.getVisibleCells().length}
                           sx={{ p: 2.5, overflow: 'hidden' }}
                         >
-                          {/* <MemberView data={row.original} /> */}
-                          member-view
+                          <MemberView data={row.original} />
                         </TableCell>
                       </TableRow>
                     )}
