@@ -1,12 +1,15 @@
+import type { DialogProps } from '@mui/material'
 import { Dialog, DialogContent, DialogTitle, ListItem } from '@mui/material'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import React from 'react'
+import React, { useState } from 'react'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@/components/@extended/Avatar'
 import ListItemText from '@mui/material/ListItemText'
+import { PopupTransition } from '@/components/@extended/Transitions'
 import List from '@mui/material/List'
+import TextField from '@mui/material/TextField'
 
 interface Props {
   open: boolean
@@ -15,14 +18,27 @@ interface Props {
 }
 
 export default function EditMemberModal({ open, modalToggler, member }: Props) {
-  const closeModal = () => modalToggler(false)
+  const [transferOpen, setTransferOpen] = useState(false)
+
+  const closeModal = () => {
+    modalToggler(false)
+    setTransferOpen(false)
+  }
+
+  const handleCloseModal: DialogProps['onClose'] = (_event, reason) => {
+    // Handle backdrop click can close modal
+    if (reason && reason === 'backdropClick') return
+
+    closeModal()
+  }
 
   return (
     <>
       {open && (
         <Dialog
           open={open}
-          onClose={closeModal}
+          onClose={handleCloseModal}
+          TransitionComponent={PopupTransition}
           aria-labelledby="dialog-member-edit-label"
           aria-describedby="dialog-member-edit-description"
           scroll="paper"
@@ -42,25 +58,50 @@ export default function EditMemberModal({ open, modalToggler, member }: Props) {
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <List sx={{ mt: 0 }}>
-              <ListItem
-                key={member.id}
-                sx={{
-                  '&:hover': {
-                    bgcolor: 'primary.lighter',
-                    borderColor: 'primary.lighter',
-                  },
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar alt={member.email} size="sm" src={member.avatar} />
-                </ListItemAvatar>
-                <ListItemText primary={member.fullName} />
-                <Button variant="outlined" color="inherit" size="small">
-                  Transfer Owner
+            {transferOpen ? (
+              <Stack alignItems="center" spacing={2}>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Avatar size="lg" src={member?.avatar ?? ''} alt={member?.fullName ?? ''} />
+                  <Typography variant="h5" color="inherit" align="center">
+                    {member.fullName}
+                  </Typography>
+                </Stack>
+                <TextField id="email" name="email" fullWidth placeholder="Enter email" />
+                <Button type="submit" color="primary" fullWidth variant="contained">
+                  Type user email and click this button to start transfer
                 </Button>
-              </ListItem>
-            </List>
+              </Stack>
+            ) : (
+              <List sx={{ mt: 0 }}>
+                <ListItem
+                  key={member.id}
+                  sx={{
+                    '&:hover': {
+                      bgcolor: 'primary.lighter',
+                      borderColor: 'primary.lighter',
+                    },
+                  }}
+                >
+                  <ListItemAvatar sx={{ pr: 2 }}>
+                    <Avatar alt={member.email} size="lg" src={member.avatar} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={member.fullName}
+                    primaryTypographyProps={{ variant: 'h5' }}
+                  />
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setTransferOpen(true)
+                    }}
+                  >
+                    Transfer Owner
+                  </Button>
+                </ListItem>
+              </List>
+            )}
           </DialogContent>
         </Dialog>
       )}

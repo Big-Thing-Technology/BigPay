@@ -60,7 +60,7 @@ export default function AlertMemberDelete({ open, modalToggler, member }: Props)
               By deleting
               <Typography variant="subtitle1" component="span">
                 {' '}
-                {member?.fullName ?? ''}{' '}
+                {member?.fullName ?? 'member'}{' '}
               </Typography>
               , all task assigned to that member will also be deleted.
             </Typography>
