@@ -9,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@/components/@extended/Avatar'
 import React from 'react'
+import { PopupTransition } from '@/components/@extended/Transitions'
 
 interface Props {
   open: boolean
@@ -39,6 +40,7 @@ export default function AddMemberModal({ open, modalToggler }: Props) {
         <Dialog
           open={open}
           onClose={closeModal}
+          TransitionComponent={PopupTransition}
           aria-labelledby="dialog-member-add-label"
           aria-describedby="dialog-member-add-description"
           scroll="paper"
