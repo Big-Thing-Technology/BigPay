@@ -10,7 +10,6 @@ import AuthSocButton from '@/module/auth/auth-soc-button'
 import { useTranslation } from '@/translation'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/navigation'
-import { APP_LOGIN_PATH } from '@/config'
 
 const imgFacebook = 'logo/facebook.svg'
 const imgTwitter = 'logo/twitter.svg'
@@ -31,10 +30,10 @@ export default function LoginForm() {
       setCookies(USER_TOKEN, userGoogleToken)
       enqueueSnackbar(t('loginSuccessfully'), { variant: 'success' })
     } catch (e: any) {
-      if (e.message === 'Firebase: Error (auth/popup-closed-by-user).') {
-        router.push(APP_LOGIN_PATH)
-      }
       enqueueSnackbar(t('errorLoginPleaseReload'), { variant: 'error' })
+      if (e.message === 'Firebase: Error (auth/popup-closed-by-user).') {
+        router.push('/')
+      }
     }
   }
 

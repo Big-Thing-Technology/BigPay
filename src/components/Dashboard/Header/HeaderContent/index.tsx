@@ -13,12 +13,14 @@ import useConfig from '@/hooks/useConfig'
 import Localization from '@/components/Dashboard/Header/HeaderContent/Localization'
 import Button from '@mui/material/Button'
 import OrganizationModal from '@/components/Dashboard/Header/HeaderContent/OrganizationModal'
+import { useSearchParams } from 'next/navigation'
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
 export default function HeaderContent() {
   const [isOpen, setIsOpen] = useState(false)
   const { i18n } = useConfig()
+  const query = useSearchParams()
 
   const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
@@ -39,8 +41,9 @@ export default function HeaderContent() {
             color: 'primary.main',
             p: 1,
           }}
+          title="Switch organization"
         >
-          Switch Organization
+          Organization: {query.get('orgId')}
         </Button>
       </Box>
       {!downLG && localization}
