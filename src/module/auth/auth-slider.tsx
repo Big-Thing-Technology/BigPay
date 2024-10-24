@@ -17,7 +17,7 @@ const Avatar4 = 'user/avatar-4.jpg'
 
 // ==============================|| AUTH BLUR BACK SVG ||============================== //
 
-export default function AuthBackground() {
+export default function AuthSlider() {
   const settings = {
     dots: true,
     arrows: false,

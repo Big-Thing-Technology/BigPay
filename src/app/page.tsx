@@ -1,3 +1,5 @@
+import ComingSoonPage from '@/components/ComingSoon'
+
 export default function Home() {
-  return <>This is Landing Page</>
+  return <ComingSoonPage />
 }

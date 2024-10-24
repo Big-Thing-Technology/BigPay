@@ -79,7 +79,7 @@ export const inviteUser = async ({
       data: { invitationToken, expiredDate },
     })
     const sendEmailResult = await sendEmail({
-      content: `Test From BigPay. Token: ${invitationToken}`,
+      content: `Test From BigPay. Link: ${process.env.BASE_HOST}/accept-invitation?invite-token=${invitationToken}`,
       from: process.env.EMAIL_SYSTEM || '',
       to: [req.email],
       RESEND_API_KEY: process.env.EMAIL_API_KEY || '',

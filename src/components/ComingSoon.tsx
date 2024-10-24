@@ -53,7 +53,7 @@ export default function ComingSoonPage() {
         spacing={4}
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: '100vh', py: 2 }}
+        sx={{ minHeight: '10vh', py: 2 }}
       >
         <Grid item md={6}>
           <Grid container spacing={3} direction="column" alignItems="center">
