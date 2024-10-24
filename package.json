@@ -65,7 +65,8 @@
     "@tanstack/react-virtual": "^3.8.4",
     "react-number-format": "^5.4.0",
     "yup": "^1.4.0",
-    "formik": "^2.4.6"
+    "formik": "^2.4.6",
+    "react-timer-hook": "^3.0.7"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.2.0",
