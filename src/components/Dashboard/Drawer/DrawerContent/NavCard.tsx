@@ -25,7 +25,7 @@ export default function NavCard() {
           }}
         >
           <picture>
-            <source media="(prefers-color-scheme: dark)" srcSet="/logo/8-resized.svg" />
+            <source media="(prefers-color-scheme: dark)" srcSet="/user/customer-support-1.png" />
             <img
               src="/user/customer-support-1.png"
               alt="logo"

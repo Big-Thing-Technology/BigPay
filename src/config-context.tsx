@@ -67,6 +67,13 @@ function ConfigProvider({ children }: ConfigProviderProps) {
     })
   }
 
+  const onChangeThemeLayout = (miniDrawer: boolean) => {
+    setConfig({
+      ...config,
+      miniDrawer,
+    })
+  }
+
   const onChangeContrast = (themeContrast: string) => {
     const contrastValue: boolean = themeContrast === 'contrast'
     setConfig({
@@ -100,6 +107,7 @@ function ConfigProvider({ children }: ConfigProviderProps) {
           onChangeMode,
           onChangePresetColor,
           onChangeMiniDrawer,
+          onChangeThemeLayout,
           onChangeMenuCaption,
           onChangeFontFamily,
           onChangeContrast,

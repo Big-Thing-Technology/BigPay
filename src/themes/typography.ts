@@ -1,10 +1,5 @@
-// material-ui
 import { TypographyVariantsOptions } from '@mui/material/styles'
 import { FontFamily } from '@/types/config'
-
-// project-imports
-
-// types
 
 // ==============================|| DEFAULT THEME - TYPOGRAPHY  ||============================== //
 

@@ -18,7 +18,7 @@ export const HEADER_HEIGHT = 74
 const roboto = Roboto({
   subsets: ['latin'],
   fallback: ['sans-serif'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['100', '300', '400', '500', '700', '900'],
   adjustFontFallback: false,
 })
 
@@ -41,8 +41,8 @@ const config: DefaultConfigProps = {
   menuCaption: true,
   miniDrawer: false,
   container: false,
-  mode: ThemeMode.LIGHT,
-  presetColor: 'default',
+  mode: ThemeMode.AUTO,
+  presetColor: 'theme1',
   themeContrast: false,
 }
 
