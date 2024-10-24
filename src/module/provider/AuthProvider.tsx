@@ -7,7 +7,13 @@ import { GetUserAndRoleRes } from '../../../server-functions/user/get-user-and-r
 import { apiUrl, getUrlApi } from '@/utils/get-url-api'
 import { useInfoUser } from '@/atom/useInfoUser'
 import { redirect, usePathname, useSearchParams } from 'next/navigation'
-import { APP_ADMIN_PATH, APP_CLIENT_PATH, APP_LOGIN_PATH, APP_STARTUP_PATH } from '@/config'
+import {
+  APP_ACCEPT_INVITATION_PATH,
+  APP_ADMIN_PATH,
+  APP_CLIENT_PATH,
+  APP_LOGIN_PATH,
+  APP_STARTUP_PATH,
+} from '@/config'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // Get token from cookies
@@ -38,11 +44,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   if (!mounted) return null
 
-  if (mounted && !cookies.token && !pathName.includes(APP_LOGIN_PATH)) {
-    redirect(APP_LOGIN_PATH)
+  if (mounted && !cookies.token) {
+    if (!pathName.includes(APP_LOGIN_PATH) && !query.get('invite-token')) {
+      redirect(APP_LOGIN_PATH)
+    }
+  }
+  if (
+    !pathName.includes(APP_ACCEPT_INVITATION_PATH) &&
+    query.get('invite-token') &&
+    cookies.token
+  ) {
+    redirect(`${APP_ACCEPT_INVITATION_PATH}?invite-token=${query.get('invite-token')}`)
   }
 
-  if (mounted && !userInfo?.isAdmin && cookies.token) {
+  if (mounted && !userInfo?.isAdmin && cookies.token && !query.get('invite-token')) {
     // Always redirect user to start-up page if they don't have any org
     if (!pathName.includes(APP_STARTUP_PATH) && userInfo && userInfo.orgMember.length === 0) {
       redirect(APP_STARTUP_PATH)

@@ -6,12 +6,14 @@ import Box from '@mui/material/Box'
 
 // project-imports
 import AuthSlider from './auth-slider'
+import AuthBackground from '@/module/auth/auth-background'
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
-export const AuthLayout = ({ children }: { children: any }) => {
+export const AuthLayout = ({ children, slider = true }: { children: any; slider?: boolean }) => {
   return (
     <Box sx={{ minHeight: '100vh' }}>
+      <AuthBackground />
       <Grid
         container
         direction="column"
@@ -46,45 +48,47 @@ export const AuthLayout = ({ children }: { children: any }) => {
             >
               {children}
             </Grid>
-            <Grid
-              item
-              sx={{
-                display: { xs: 'none', lg: 'flex' },
-                width: 580,
-                overflow: 'hidden',
-                alignSelf: 'stretch',
-                position: 'relative',
-                bgcolor: 'primary.main',
-              }}
-            >
-              <Box
-                component="img"
-                src="./auth/ellipse-3.svg"
-                alt="ellipse 3"
+            {slider && (
+              <Grid
+                item
                 sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: 'auto',
-                  height: 'auto',
+                  display: { xs: 'none', lg: 'flex' },
+                  width: 580,
+                  overflow: 'hidden',
+                  alignSelf: 'stretch',
+                  position: 'relative',
+                  bgcolor: 'primary.main',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src="./auth/ellipse-3.svg"
+                  alt="ellipse 3"
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: 'auto',
+                    height: 'auto',
+                  }}
+                />
 
-              <Box
-                component="img"
-                src="./auth/ellipse-4.svg"
-                alt="ellipse 4"
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: 'auto',
-                  height: 'auto',
-                }}
-              />
+                <Box
+                  component="img"
+                  src="./auth/ellipse-4.svg"
+                  alt="ellipse 4"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    width: 'auto',
+                    height: 'auto',
+                  }}
+                />
 
-              <AuthSlider />
-            </Grid>
+                <AuthSlider />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>

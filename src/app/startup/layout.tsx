@@ -5,5 +5,5 @@ export default function ForgotPasswordLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <AuthLayout>{children}</AuthLayout>
+  return <AuthLayout slider={false}>{children}</AuthLayout>
 }

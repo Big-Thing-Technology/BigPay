@@ -11,6 +11,7 @@ export const APP_ADMIN_PATH = '/admin'
 export const APP_LOGIN_PATH = '/login'
 export const APP_STARTUP_PATH = '/startup'
 export const APP_LANDING_PATH = '/'
+export const APP_ACCEPT_INVITATION_PATH = '/accept-invitation'
 export const DRAWER_WIDTH = 280
 export const MINI_DRAWER_WIDTH = 90
 export const HEADER_HEIGHT = 74
