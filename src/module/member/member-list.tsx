@@ -14,6 +14,7 @@ import { ThemeMode } from '@/config'
 import ReactTable from '@/components/table/react-table'
 import Loader from '@/components/Loader'
 import AddMemberModal from '@/module/member/add-member-modal'
+import EditMemberModal from '@/module/member/edit-member-modal'
 
 const listMember = [
   {
@@ -152,8 +153,8 @@ export default function MemberList() {
   const [open, setOpen] = useState<boolean>(false)
 
   const [addMemberModal, setAddMemberModal] = useState<boolean>(false)
-  const [, setEditMemberModal] = useState<boolean>(false)
-  const [, setSelectedMember] = useState<any | null>(null)
+  const [editMemberModal, setEditMemberModal] = useState<boolean>(false)
+  const [selectedMember, setSelectedMember] = useState<any | null>(null)
   const [, setMemberDeleteId] = useState<any>('')
 
   const handleClose = () => {
@@ -294,6 +295,11 @@ export default function MemberList() {
       {/*  handleClose={handleClose} */}
       {/* /> */}
       <AddMemberModal open={addMemberModal} modalToggler={setAddMemberModal} />
+      <EditMemberModal
+        open={editMemberModal}
+        modalToggler={setEditMemberModal}
+        member={selectedMember}
+      />
     </>
   )
 }
