@@ -15,6 +15,7 @@ import ReactTable from '@/components/table/react-table'
 import Loader from '@/components/Loader'
 import AddMemberModal from '@/module/member/add-member-modal'
 import EditMemberModal from '@/module/member/edit-member-modal'
+import AlertMemberDelete from '@/module/member/alert-member-delete'
 
 const listMember = [
   {
@@ -150,16 +151,11 @@ export default function MemberList() {
   const theme = useTheme()
 
   const [loading] = useState(false)
-  const [open, setOpen] = useState<boolean>(false)
 
   const [addMemberModal, setAddMemberModal] = useState<boolean>(false)
   const [editMemberModal, setEditMemberModal] = useState<boolean>(false)
+  const [deleteMemberModal, setDeleteMemberModal] = useState<boolean>(false)
   const [selectedMember, setSelectedMember] = useState<any | null>(null)
-  const [, setMemberDeleteId] = useState<any>('')
-
-  const handleClose = () => {
-    setOpen(!open)
-  }
 
   const columns = useMemo<ColumnDef<any>[]>(
     () => [
@@ -259,8 +255,8 @@ export default function MemberList() {
                   }}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.stopPropagation()
-                    handleClose()
-                    setMemberDeleteId(Number(row.original.id))
+                    setSelectedMember(row.original)
+                    setDeleteMemberModal(true)
                   }}
                 >
                   <Trash />
@@ -288,16 +284,15 @@ export default function MemberList() {
         }}
       />
 
-      {/* <AlertMemberDelete */}
-      {/*  id={Number(memberDeleteId)} */}
-      {/*  title={memberDeleteId} */}
-      {/*  open={open} */}
-      {/*  handleClose={handleClose} */}
-      {/* /> */}
       <AddMemberModal open={addMemberModal} modalToggler={setAddMemberModal} />
       <EditMemberModal
         open={editMemberModal}
         modalToggler={setEditMemberModal}
+        member={selectedMember}
+      />
+      <AlertMemberDelete
+        open={deleteMemberModal}
+        modalToggler={setDeleteMemberModal}
         member={selectedMember}
       />
     </>
